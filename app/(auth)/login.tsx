@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Linking, Platform, Text, View } from "react-native";
 import { VStack } from "@/components/ui/vstack";
 import { Link, useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   GET_CUSTOMER_LEAD_DETAILS,
   GET_USER_DETAILS,
@@ -129,7 +129,7 @@ const LoginScreen = () => {
                   await setItem(CUSTOMER_LEAD_ID, customerData.id ?? "");
                   if (customerLeadStatus === CUSTOMER_LEAD_ACTIVE) {
                     await setItem(IS_LEAD, "false");
-                    router.replace({ pathname: "/(home)/home" });
+                    router.replace({ pathname: "/(root)/home" });
                   } else {
                     await setItem(IS_LEAD, "true");
                     Toast.show({
