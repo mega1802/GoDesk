@@ -53,6 +53,12 @@
         {
           "userTrackingPermission": "We would like to track your activity to provide a better experience and personalized content."
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
       ]
     ],
     "experiments": {

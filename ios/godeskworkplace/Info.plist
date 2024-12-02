@@ -59,6 +59,10 @@
     <string>Allow $(PRODUCT_NAME) to access your microphone</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Allow access to your photos to upload damaged asset images for reporting purposes.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>"Allow $(PRODUCT_NAME) to use your location.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>"Allow $(PRODUCT_NAME) to use your location.</string>
     <key>NSUserActivityTypes</key>
     <array>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>

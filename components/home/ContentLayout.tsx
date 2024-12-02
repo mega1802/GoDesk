@@ -1,14 +1,14 @@
 import {
   FlatList,
-  Image,
   Pressable,
   Text,
   TouchableOpacity,
   View,
+  Image,
 } from "react-native";
 import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, ButtonText } from "@/components/ui/button";
 import RecentTicketHistoryLayout from "@/components/common/RecentTicketHistoryLayout";
 import { router } from "expo-router";
@@ -17,6 +17,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { RoleModel, RoleModulePermissionsModel } from "@/models/rbac";
 import { UserDetailsModel } from "@/models/users";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { getGreetingMessage } from "@/utils/helper";
+import CheckInOut from "./CheckInOut";
 
 const ContentLayout = ({
   customerDetails,
@@ -41,6 +43,18 @@ const ContentLayout = ({
       code: "USERS",
     },
   ]);
+
+  const bottomSheetRef = useRef(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const toggleImagePicker = () => {
+    setIsModalVisible(!isModalVisible);
+    if (!isModalVisible) {
+      bottomSheetRef.current?.show();
+    } else {
+      bottomSheetRef.current?.hide();
+    }
+  };
 
   useEffect(() => {
     if (customerDetails.id) {
@@ -85,18 +99,31 @@ const ContentLayout = ({
   }, [customerDetails, roleDetails]);
 
   return (
-    <VStack className="mt-2">
+    <View className="mt-2">
       <View className="px-4">
-        <Text className="text-2xl font-bold">
-          Hello{" "}
-          <Text className="color-primary-950">
-            {customerDetails.firstName ?? ""} {customerDetails.lastName ?? ""}{" "}
-            👋
-          </Text>
-        </Text>
-        <Text className="color-gray-500 mt-1 text-md">
-          Ensure quick resolutions for your team’s IT issues.
-        </Text>
+        <View className="w-full">
+          <View className="flex-row justify-between items-center">
+            <View className="">
+              <Text className="text-xl font-bold">
+                {getGreetingMessage()} 👋
+              </Text>
+              <Text className="color-primary-950 text-xl font-bold">
+                {customerDetails.firstName ?? ""}{" "}
+                {customerDetails.lastName ?? ""}
+              </Text>
+            </View>
+            <View className="">
+              <Button
+                className="bg-primary-950"
+                onPress={() => {
+                  toggleImagePicker();
+                }}
+              >
+                <ButtonText>Check In</ButtonText>
+              </Button>
+            </View>
+          </View>
+        </View>
         <View className="mt-6 ps-4 pe-0 rounded-2xl bg-white">
           <View className="flex-row justify-between items-end">
             <VStack className="w-44 justify-evenly my-3">
@@ -194,7 +221,11 @@ const ContentLayout = ({
       <View className="mt-2">
         <RecentTicketHistoryLayout placing="home" />
       </View>
-    </VStack>
+      <CheckInOut
+        setIsModalVisible={setIsModalVisible}
+        bottomSheetRef={bottomSheetRef}
+      />
+    </View>
   );
 };
 

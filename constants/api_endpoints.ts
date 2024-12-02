@@ -2,6 +2,10 @@
 export const LOGIN = "/login/user_login";
 export const VALIDATE_TOKEN = "/login/validate";
 export const REFRESH_TOKEN = "/login/refresh_token";
+export const SEND_OTP_TO_EMAIL =
+  "/userProfile/forgotPassword/sendForgotPasswordEmail";
+export const VERIFY_EMAIL_OTP = "/userProfile/forgotPassword/checkOTP";
+export const CHANGE_PASSWORD = "/userProfile/forgotPassword/resetPassword";
 
 // configurations
 export const GET_CONFIGURATIONS_BY_CATEGORY =

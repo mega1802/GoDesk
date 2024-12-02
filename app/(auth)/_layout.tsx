@@ -1,4 +1,5 @@
 import { Stack } from "expo-router";
+import React from "react";
 
 const Layout = () => {
   return (
@@ -9,6 +10,12 @@ const Layout = () => {
         options={{
           headerTitle: "Register Organization",
           headerBackTitle: "Login",
+        }}
+      />
+      <Stack.Screen
+        name="forgot_password"
+        options={{
+          headerShown: false,
         }}
       />
     </Stack>

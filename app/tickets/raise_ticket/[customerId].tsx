@@ -25,8 +25,8 @@ import {
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { Pressable, ScrollView, Text, View, Image } from "react-native";
 import { Button, ButtonText } from "@/components/ui/button";
-import FeatherIcon from "react-native-vector-icons/Feather";
-import AntDesign from "react-native-vector-icons/AntDesign";
+import FeatherIcon from "@expo/vector-icons/Feather";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { RaiseTicketRequestModel } from "@/models/tickets";
 import api from "@/services/api";
 import { HStack } from "@/components/ui/hstack";

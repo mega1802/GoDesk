@@ -6,6 +6,7 @@ import {
   ASSIGNED,
 } from "@/constants/configuration_keys";
 import { ErrorModel } from "@/models/common";
+import moment from "moment";
 
 export const isFormFieldInValid = (
   name: string,
@@ -97,4 +98,18 @@ export const getStatusColor = (statusKey?: string): string => {
 
 export function bytesToMB(bytes: number) {
   return bytes / (1024 * 1024);
+}
+
+export function getGreetingMessage() {
+  const currentHour = moment().hour();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return "Good Morning";
+  } else if (currentHour >= 12 && currentHour < 17) {
+    return "Good Afternoon";
+  } else if (currentHour >= 17 && currentHour < 21) {
+    return "Good Evening";
+  } else {
+    return "Hello";
+  }
 }

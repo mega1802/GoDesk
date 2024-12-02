@@ -1,8 +1,8 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Linking, Platform, Text, View } from "react-native";
+import { Linking, Platform, Pressable, Text, View } from "react-native";
 import { VStack } from "@/components/ui/vstack";
 import { Link, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   GET_CUSTOMER_LEAD_DETAILS,
   GET_USER_DETAILS,
@@ -17,7 +17,7 @@ import {
   IS_LEAD,
   REFRESH_TOKEN_KEY,
 } from "@/constants/storage_keys";
-import { clearStorage, getItem, setItem } from "@/utils/secure_store";
+import { clearStorage, setItem } from "@/utils/secure_store";
 import { CUSTOMER_LEAD_ACTIVE } from "@/constants/configuration_keys";
 import { CustomerLeadDetailsModel } from "@/models/customers";
 import Toast from "react-native-toast-message";
@@ -270,6 +270,17 @@ const LoginScreen = () => {
                 setPassword(value);
               }}
             />
+            <Pressable
+              onPress={() => {
+                router.push("/forgot_password");
+              }}
+            >
+              <View className="flex-row justify-end items-end">
+                <Text className="text-end font-semibold text-primary-950 text-sm">
+                  Forgot Password?
+                </Text>
+              </View>
+            </Pressable>
             <SubmitButton
               btnText="Log In"
               isLoading={isLoading}
