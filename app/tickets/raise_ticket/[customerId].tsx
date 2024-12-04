@@ -437,11 +437,12 @@ const RaiseTicketScreen = () => {
       </VStack>
       <ImagePickerComponent
         onImagePicked={(uri, fileSizeBytes) => {
+          console.log("uri", uri);
           const fileSizeMB = bytesToMB(fileSizeBytes);
-          if (fileSizeMB > 3) {
+          if (fileSizeMB > 15) {
             Toast.show({
               type: "error",
-              text1: "Image larger than 3MB are not accepted.",
+              text1: "Image larger than 15mb are not accepted.",
             });
             return;
           }

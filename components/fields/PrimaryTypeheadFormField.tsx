@@ -118,7 +118,10 @@ const PrimaryTypeheadFormField = ({
         placeholder={placeholder}
         filterExp={filterExp}
         editable={editable}
-        onItemSelect={onItemSelect}
+        onItemSelect={(type, item) => {
+          onItemSelect && onItemSelect(type, item);
+          validateField({ id: item.id ?? "", title: item.title ?? "" });
+        }}
         keyboardType={keyboardType}
         fieldName={fieldName}
         errors={errors}

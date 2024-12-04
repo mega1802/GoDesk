@@ -128,6 +128,11 @@ export default function RootLayout() {
                 name="tickets/tickets_history/details/[ticketId]"
                 options={{ headerTitle: "Ticket Details", headerBackTitle: "" }}
               />
+              {/*Settings */}
+              {/* <Stack.Screen
+                name="settings/change_password"
+                options={{ headerTitle: "Change Password" }}
+              /> */}
             </Stack>
             <Toast />
           </RefreshProvider>

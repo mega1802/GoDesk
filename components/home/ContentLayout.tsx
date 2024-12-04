@@ -15,10 +15,13 @@ import { router } from "expo-router";
 import { ServiceItemModel } from "@/models/ui/service_item_model";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { RoleModel, RoleModulePermissionsModel } from "@/models/rbac";
-import { UserDetailsModel } from "@/models/users";
+import { CheckInOutStatusDetailsModel, UserDetailsModel } from "@/models/users";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { getGreetingMessage } from "@/utils/helper";
-import CheckInOut from "./CheckInOut";
+import CheckIn from "./CheckInOut";
+import api from "@/services/api";
+import { GET_CHECK_IN_OUT_STATUS } from "@/constants/api_endpoints";
+import CheckInOutModal from "./CheckInOut";
 
 const ContentLayout = ({
   customerDetails,
@@ -29,23 +32,16 @@ const ContentLayout = ({
   authorizedModules: RoleModulePermissionsModel[];
   roleDetails: RoleModel;
 }) => {
-  let [serviceTabs, setServiceTabs] = useState<ServiceItemModel[]>([
-    {
-      label: "Devices",
-      icon: <AntDesign name="laptop" size={20} color="#39a676" />,
-      path: "/devices/devices_list",
-      code: "DEVICES",
-    },
-    {
-      label: " Users",
-      icon: <AntDesign name="laptop" size={20} color="#39a676" />,
-      path: "/users/users_list",
-      code: "USERS",
-    },
-  ]);
+  const [serviceTabs, setServiceTabs] = useState<ServiceItemModel[]>([]);
 
   const bottomSheetRef = useRef(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [checkInOutStatusDetails, setCheckInOutStatusDetails] =
+    useState<CheckInOutStatusDetailsModel>({});
+
+  const [ticketsTabAdded, setTicketsTabAdded] = useState(false);
+  const [customerTabsAdded, setCustomerTabsAdded] = useState(false);
 
   const toggleImagePicker = () => {
     setIsModalVisible(!isModalVisible);
@@ -58,14 +54,7 @@ const ContentLayout = ({
 
   useEffect(() => {
     if (customerDetails.id) {
-      let isTicketTabExist = false;
-      for (const tabs of serviceTabs) {
-        if (tabs.code === "TICKETS") {
-          isTicketTabExist = true;
-          break;
-        }
-      }
-      if (!isTicketTabExist) {
+      if (!ticketsTabAdded) {
         setServiceTabs((prev) => {
           prev.push({
             label: "Tickets",
@@ -78,25 +67,56 @@ const ContentLayout = ({
           });
           return prev;
         });
+        setTicketsTabAdded(true);
       }
 
       const userTypeKey = customerDetails?.userTypeDetails?.key;
 
       if (
         userTypeKey !== undefined &&
-        customerDetails?.userTypeDetails?.key !== "CUSTOMER"
+        customerDetails?.userTypeDetails?.key === "CUSTOMER" &&
+        !customerTabsAdded
       ) {
-        const unauthorizedTabIndexes = ["DEVICES", "USERS"];
         setServiceTabs((prev) => {
           return [
-            ...prev.filter(
-              (tab) => !unauthorizedTabIndexes.includes(tab.code ?? ""),
-            ),
+            ...prev,
+            {
+              label: "Devices",
+              icon: <AntDesign name="laptop" size={20} color="#39a676" />,
+              path: "/devices/devices_list",
+              code: "DEVICES",
+            },
+            {
+              label: " Users",
+              icon: <AntDesign name="laptop" size={20} color="#39a676" />,
+              path: "/users/users_list",
+              code: "USERS",
+            },
           ];
         });
+        setCustomerTabsAdded(true);
       }
     }
   }, [customerDetails, roleDetails]);
+
+  const fetchCheckInOutStatus = async () => {
+    api
+      .get(GET_CHECK_IN_OUT_STATUS)
+      .then((response) => {
+        console.log("checkInDetails", response.data.data);
+        const data = response.data?.data;
+        if (data) {
+          setCheckInOutStatusDetails(data);
+        }
+      })
+      .catch((e) => {
+        console.error(e.response.data);
+      });
+  };
+
+  useEffect(() => {
+    fetchCheckInOutStatus();
+  }, []);
 
   return (
     <View className="mt-2">
@@ -112,16 +132,22 @@ const ContentLayout = ({
                 {customerDetails.lastName ?? ""}
               </Text>
             </View>
-            <View className="">
-              <Button
-                className="bg-primary-950"
-                onPress={() => {
-                  toggleImagePicker();
-                }}
-              >
-                <ButtonText>Check In</ButtonText>
-              </Button>
-            </View>
+            {checkInOutStatusDetails.value !== "Checked Out" && (
+              <View className="">
+                <Button
+                  className="bg-primary-950 rounded-lg"
+                  onPress={() => {
+                    toggleImagePicker();
+                  }}
+                >
+                  <ButtonText>
+                    {checkInOutStatusDetails.value === "Checked In"
+                      ? "Check Out"
+                      : "Check In"}
+                  </ButtonText>
+                </Button>
+              </View>
+            )}
           </View>
         </View>
         <View className="mt-6 ps-4 pe-0 rounded-2xl bg-white">
@@ -159,39 +185,41 @@ const ContentLayout = ({
             />
           </View>
         </View>
-        <VStack className="mt-4">
-          <Text className="text-[16px] font-bold">Quick Actions</Text>
-          <FlatList
-            className="mt-2"
-            data={serviceTabs}
-            numColumns={3}
-            renderItem={(item) => {
-              const icon: any = item.item.icon;
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    const path: any = item.item.path;
-                    if (path) {
-                      router.push({
-                        pathname: path,
-                        params: item.item.params ?? {},
-                      });
-                    }
-                  }}
-                >
-                  <View className="px-2 py-3 bg-white my-2 me-5 rounded-lg flex justify-center items-center gap-2 w-28">
-                    <View className=" w-10 h-10 p-1 bg-primary-100 rounded-full flex justify-center items-center ">
-                      {icon}
+        {serviceTabs && (
+          <VStack className="mt-4">
+            <Text className="text-[16px] font-bold">Quick Actions</Text>
+            <FlatList
+              className="mt-2"
+              data={serviceTabs}
+              numColumns={3}
+              renderItem={(item) => {
+                const icon: any = item.item.icon;
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      const path: any = item.item.path;
+                      if (path) {
+                        router.push({
+                          pathname: path,
+                          params: item.item.params ?? {},
+                        });
+                      }
+                    }}
+                  >
+                    <View className="px-2 py-3 bg-white my-2 me-5 rounded-lg flex justify-center items-center gap-2 w-28">
+                      <View className=" w-10 h-10 p-1 bg-primary-100 rounded-full flex justify-center items-center ">
+                        {icon}
+                      </View>
+                      <Text className="text-primary-900 font-semibold text-sm">
+                        {item.item.label}
+                      </Text>
                     </View>
-                    <Text className="text-primary-900 font-semibold text-sm">
-                      {item.item.label}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            }}
-          />
-        </VStack>
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          </VStack>
+        )}
         <HStack className="justify-between mt-4">
           <View className="flex-row items-center">
             <Text className="text-[16px] font-bold">Recent Tickets</Text>
@@ -221,9 +249,15 @@ const ContentLayout = ({
       <View className="mt-2">
         <RecentTicketHistoryLayout placing="home" />
       </View>
-      <CheckInOut
+      <CheckInOutModal
         setIsModalVisible={setIsModalVisible}
         bottomSheetRef={bottomSheetRef}
+        status={checkInOutStatusDetails.value}
+        checkedInId={checkInOutStatusDetails.id}
+        onClose={() => {
+          setIsModalVisible(false);
+          fetchCheckInOutStatus();
+        }}
       />
     </View>
   );

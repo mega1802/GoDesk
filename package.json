@@ -46,6 +46,7 @@
     "expo-font": "~13.0.1",
     "expo-image-picker": "~16.0.3",
     "expo-linking": "~7.0.3",
+    "expo-location": "~18.0.2",
     "expo-router": "^4.0.8",
     "expo-splash-screen": "~0.29.13",
     "expo-status-bar": "~2.0.0",
@@ -76,9 +77,8 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "15.8.0",
     "react-native-swiper": "^1.6.0",
-    "react-native-toast-message": "^2.2.0",
-    "react-native-web": "~0.19.10",
-    "expo-location": "~18.0.2"
+    "react-native-toast-message": "^2.2.1",
+    "react-native-web": "~0.19.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

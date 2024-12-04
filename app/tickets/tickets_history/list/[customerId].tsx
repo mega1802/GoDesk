@@ -1,10 +1,11 @@
 import RecentTicketHistoryLayout from "@/components/common/RecentTicketHistoryLayout";
 import { VStack } from "@/components/ui/vstack";
 import { Button, ButtonText } from "@/components/ui/button";
-import Icon from "react-native-vector-icons/AntDesign";
+import Icon from "@expo/vector-icons/AntDesign";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { View } from "react-native";
+import React from "react";
 
 const TicketsHistoryScreen = () => {
   const { customerId } = useLocalSearchParams();

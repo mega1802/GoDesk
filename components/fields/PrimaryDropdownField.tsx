@@ -18,7 +18,7 @@ interface PrimaryDropdownFieldProps {
   options: any[];
   selectedValue: any;
   type: string;
-  onItemSelect?: (type: string, selectedConfig: any) => void;
+  onItemSelect: (type: string, selectedConfig: any) => void;
   placeholder: string;
   setSelectedValue: any;
 }
@@ -39,7 +39,7 @@ const PrimaryDropdownField = ({
       selectedValue={selectedValue.value}
       onValueChange={(e) => {
         // setSelectedValue(e);
-        onItemSelect && onItemSelect(type, e);
+        onItemSelect(type, e);
       }}
     >
       <SelectTrigger variant="outline" className="flex justify-between w-full">

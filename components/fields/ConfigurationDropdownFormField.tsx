@@ -99,7 +99,10 @@ const ConfigurationDropdownFormField = ({
         selectedConfig={selectedConfig}
         setSelectedConfig={setSelectedConfig}
         placeholder={placeholder}
-        onItemSelect={onItemSelect}
+        onItemSelect={(config) => {
+          onItemSelect && onItemSelect(config);
+          validateField(config);
+        }}
       />
       <FormControlError>
         <FormControlErrorText>

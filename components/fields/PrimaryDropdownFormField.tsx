@@ -10,6 +10,7 @@ import {
 } from "../ui/form-control";
 import { ErrorModel } from "@/models/common";
 import PrimaryDropdownField from "./PrimaryDropdownField";
+import React from "react";
 
 interface PrimaryDropdownFormFieldProps {
   options: any[];
@@ -102,7 +103,10 @@ const PrimaryDropdownFormField = ({
         options={options}
         selectedValue={selectedValue}
         placeholder={placeholder}
-        onItemSelect={onItemSelect}
+        onItemSelect={(type, selectedItem) => {
+          onItemSelect && onItemSelect(type, selectedItem);
+          validateField(selectedItem);
+        }}
         type={type}
         setSelectedValue={setSelectedValue}
       />

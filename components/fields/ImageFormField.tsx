@@ -93,6 +93,7 @@ const ImageFormField = ({
       <ImagePickerComponent
         onImagePicked={(uri: string) => {
           setImagePath(uri);
+          validateField(uri);
         }}
         setIsModalVisible={setIsModalVisible}
         bottomSheetRef={bottomSheetRef}

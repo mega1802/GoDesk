@@ -1,6 +1,6 @@
 import { BASE_URL } from "@/config/env";
 import { AUTH_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/storage_keys";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { getItem, setItem } from "@/utils/secure_store";
 
 const api = axios.create({
@@ -28,14 +28,23 @@ api.interceptors.request.use(
         await axios.post(BASE_URL + `/login/validate?token=${token}`, {});
         // console.log(validateResponse);
       } catch (e) {
-        // console.error(e);
-        const refreshToken = await getItem(REFRESH_TOKEN_KEY);
-        const response = await axios.post(BASE_URL + "/auth/refresh-token", {
-          token: refreshToken,
-        });
-        const newToken = response.data.token;
-        await setItem(AUTH_TOKEN_KEY, newToken);
-        token = newToken;
+        console.error("token invalid");
+        try {
+          const refreshToken = await getItem(REFRESH_TOKEN_KEY);
+          console.log("refreshToken", refreshToken);
+          const response = await axios.get(
+            BASE_URL + "/login/refresh_token" + `?refreshToken=${refreshToken}`,
+          );
+          const newToken = response.data?.data?.accessToken;
+          await setItem(AUTH_TOKEN_KEY, newToken);
+          console.log("newToken", newToken);
+          token = newToken;
+        } catch (e) {
+          console.error("Refresh token error");
+          if (e && e instanceof AxiosError) {
+            console.log(e.response?.data);
+          }
+        }
       }
       config.headers.Authorization = `Bearer ${token}`;
       // await removeItem(AUTH_TOKEN_KEY);

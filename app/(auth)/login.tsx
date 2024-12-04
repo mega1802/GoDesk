@@ -286,7 +286,7 @@ const LoginScreen = () => {
               isLoading={isLoading}
               onPress={login}
             />
-            {Platform.OS === "ios" ? (
+            {Platform.OS !== "ios" ? (
               <Text className=" text-sm text-center px-12 mt-4">
                 {/* To register your organization contact GoDesk Workplace Admin */}
                 {/* <Text

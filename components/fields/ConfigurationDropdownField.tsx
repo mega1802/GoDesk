@@ -22,7 +22,7 @@ interface ConfigurationDropdownFieldProps {
   selectedConfig: ConfigurationModel;
   setSelectedConfig: any;
   placeholder: string;
-  onItemSelect?: (config: ConfigurationModel) => void;
+  onItemSelect: (config: ConfigurationModel) => void;
 }
 
 const ConfigurationDropdownField = ({
@@ -62,7 +62,7 @@ const ConfigurationDropdownField = ({
         let config = options.find((option) => e === option.id);
         if (config) {
           setSelectedConfig(config);
-          onItemSelect && onItemSelect(config);
+          onItemSelect(config);
         }
       }}
     >

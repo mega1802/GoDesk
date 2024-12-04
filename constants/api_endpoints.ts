@@ -80,3 +80,9 @@ export const GET_ORG_USERS = "/customers/getCustomerByNameAndOrgId";
 // modules
 export const GET_LOGINED_USER_MODULES =
   "/rbac/roles/getLoginedUserRoleModulePermissionsAsTree";
+
+// check in out
+export const CHECK_IN_OUT =
+  "/attendanceTransaction/createORUpdateAttendanceTransaction";
+export const GET_CHECK_IN_OUT_STATUS =
+  "/attendanceTransaction/checkAttendanceStatusByEmployeeId";
