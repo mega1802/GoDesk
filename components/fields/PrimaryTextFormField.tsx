@@ -133,10 +133,10 @@ const PrimaryTextFormField = ({
           {isRequired ? "*" : ""}
         </FormControlLabelAstrick>
       </FormControlLabel>
-      {/* <Input variant="outline" size="md" className="h-14" >
+      <Input variant="outline" size="md" className="h-14">
         <InputField
-          type={isPasswordVisible ? "text" : inputType}
-          secureTextEntry={true}
+          type={!isSecured ? "text" : inputType}
+          secureTextEntry={isSecured}
           placeholder={placeholder}
           value={value}
           keyboardType={keyboardType}
@@ -162,34 +162,17 @@ const PrimaryTextFormField = ({
             validateField(caseValue);
           }}
         />
-        {inputType === "password" ? (
-          isPasswordVisible ? (
-            <Pressable
-              onPress={() => {
-                setIsPasswordVisible(!isPasswordVisible);
-              }}
-            >
-              <Feather name="eye" className="me-3" size={16} color="#9ca3af" />
-            </Pressable>
-          ) : (
-            <Pressable
-              onPress={() => {
-                setIsPasswordVisible(!isPasswordVisible);
-              }}
-            >
-              <Feather
-                name="eye-off"
-                className="me-3"
-                size={16}
-                color="#6b7280"
-              />
-            </Pressable>
-          )
-        ) : (
-          <></>
+        {inputType === "password" && (
+          <Pressable
+            onPress={() => {
+              setIsSecured(!isSecured);
+            }}
+          >
+            <Feather name={isSecured ? "eye-off" : "eye"} className="me-3" size={18} color="#9ca3af" />
+          </Pressable>
         )}
-      </Input> */}
-      <View
+      </Input>
+      {/* <View
         className="flex-row items-center border-[1px] border-gray-300 px-3 rounded-md h-14"
       >
         <TextInput
@@ -228,7 +211,7 @@ const PrimaryTextFormField = ({
             <Feather name={isSecured ? "eye-off" : "eye"} className="me-3" size={16} color="#9ca3af" />
           </Pressable>
         )}
-      </View>
+      </View> */}
       <FormControlError>
         <FormControlErrorText>
           {isFormFieldInValid(fieldName, errors)}
