@@ -70,7 +70,6 @@ const PrimaryTypeheadField = ({
       // direction={Platform.select({ ios: "down" })}
       dataSet={suggestions}
       onChangeText={(text: string) => {
-        console.log("txext", text);
         if (filterExp && !filterExp.test(text)) {
           return;
         }
@@ -125,6 +124,7 @@ const PrimaryTypeheadField = ({
         borderRadius: 5,
         // borderColor: "#8c8c8c",
         padding: 1,
+        height: 46,
       }}
       suggestionsListContainerStyle={{
         backgroundColor: "#fff",
@@ -140,7 +140,7 @@ const PrimaryTypeheadField = ({
         <Feather name="chevron-down" size={20} color="#8c8c8c" />
       }
       //   ClearIconComponent={<Feather name="x-circle" size={18} color="#fff" />}
-      inputHeight={35}
+      inputHeight={44}
       showChevron={editable}
       closeOnBlur={false}
       showClear={editable}
@@ -149,7 +149,7 @@ const PrimaryTypeheadField = ({
         searchText.length === 0 ? (
           <View></View>
         ) : (
-          <View className="py-3 px-3">
+          <View className="px-3 py-3">
             <Text>No items found</Text>
           </View>
         )

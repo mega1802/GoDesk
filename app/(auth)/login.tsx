@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Linking, Platform, Pressable, Text, View } from "react-native";
+import { Keyboard, KeyboardAvoidingView, Linking, Platform, Pressable, ScrollView, Text, TouchableWithoutFeedback, View } from "react-native";
 import { VStack } from "@/components/ui/vstack";
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
@@ -218,121 +218,128 @@ const LoginScreen = () => {
   };
 
   return (
-    <SafeAreaView>
-      <View className="h-full flex justify-between pb-14">
-        <VStack className="mt-2 p-4 h-full">
-          <Text className="text-2xl font-bold text-primary-950">
-            Welcome 👋
-          </Text>
-          <Text className="color-gray-400 text-md mt-1 pe-4 leading-6">
-            Log in to manage your organization's IT issues seamlessly
-          </Text>
-          <VStack className="gap-4 mt-4">
-            <PrimaryTextFormField
-              fieldName="email"
-              label="Email"
-              placeholder="customer@business.com"
-              errors={errors}
-              setErrors={setErrors}
-              min={8}
-              keyboardType="email-address"
-              filterExp={/^[A-Za-z0-9!#$%&'*+/=?^_{|}~.-@]*$/}
-              canValidateField={canValidateField}
-              setCanValidateField={setCanValidateField}
-              setFieldValidationStatus={setFieldValidationStatus}
-              validateFieldFunc={setFieldValidationStatusFunc}
-              // customValidations={(value) => {
-              //   const customRE = /^[\w\.-]+@[a-zA-Z\d-]+(\.[a-zA-Z\d-]+)*\.[a-zA-Z]{2}$/;
-              //   if (!customRE.test(value)) {
-              //     return "Please enter a valid email";
-              //   }
-              //   return undefined;
-              // }}
-              onChangeText={(value) => {
-                setEmail(value);
-              }}
-            />
-            <PrimaryTextFormField
-              inputType="password"
-              fieldName="password"
-              label="Password"
-              placeholder="•••••••••"
-              errors={errors}
-              setErrors={setErrors}
-              min={8}
-              keyboardType="visible-password"
-              // filterExp={/^[A-Za-z0-9!#$%&'*+/=?^_{|}~.-@]*$/}
-              canValidateField={canValidateField}
-              setCanValidateField={setCanValidateField}
-              setFieldValidationStatus={setFieldValidationStatus}
-              validateFieldFunc={setFieldValidationStatusFunc}
-              onChangeText={(value) => {
-                setPassword(value);
-              }}
-            />
-            <Pressable
-              onPress={() => {
-                router.push("/forgot_password");
-              }}
-            >
-              <View className="flex-row justify-end items-end">
-                <Text className="text-end font-semibold text-primary-950 text-sm">
-                  Forgot Password?
-                </Text>
-              </View>
-            </Pressable>
-            <SubmitButton
-              btnText="Log In"
-              isLoading={isLoading}
-              onPress={login}
-            />
-            {Platform.OS !== "ios" ? (
-              <Text className=" text-sm text-center px-12 mt-4">
-                {/* To register your organization contact GoDesk Workplace Admin */}
-                {/* <Text
+    <KeyboardAvoidingView
+      className="flex-1"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View className="flex justify-between pb-14 h-full">
+          <ScrollView>
+            <View className="mt-2 p-4 h-full">
+              <Text className="font-bold text-2xl text-primary-950">
+                Welcome 👋
+              </Text>
+              <Text className="mt-1 text-md leading-6 color-gray-400 pe-4">
+                Log in to manage your organization's IT issues seamlessly
+              </Text>
+              <View className="gap-4 mt-4">
+                <PrimaryTextFormField
+                  fieldName="email"
+                  label="Email"
+                  placeholder="customer@business.com"
+                  errors={errors}
+                  setErrors={setErrors}
+                  min={8}
+                  keyboardType="email-address"
+                  filterExp={/^[A-Za-z0-9!#$%&'*+/=?^_{|}~.-@]*$/}
+                  canValidateField={canValidateField}
+                  setCanValidateField={setCanValidateField}
+                  setFieldValidationStatus={setFieldValidationStatus}
+                  validateFieldFunc={setFieldValidationStatusFunc}
+                  // customValidations={(value) => {
+                  //   const customRE = /^[\w\.-]+@[a-zA-Z\d-]+(\.[a-zA-Z\d-]+)*\.[a-zA-Z]{2}$/;
+                  //   if (!customRE.test(value)) {
+                  //     return "Please enter a valid email";
+                  //   }
+                  //   return undefined;
+                  // }}
+                  onChangeText={(value) => {
+                    setEmail(value);
+                  }}
+                />
+                <PrimaryTextFormField
+                  inputType="password"
+                  fieldName="password"
+                  label="Password"
+                  placeholder="•••••••••"
+                  errors={errors}
+                  setErrors={setErrors}
+                  min={8}
+                  keyboardType="visible-password"
+                  // filterExp={/^[A-Za-z0-9!#$%&'*+/=?^_{|}~.-@]*$/}
+                  canValidateField={canValidateField}
+                  setCanValidateField={setCanValidateField}
+                  setFieldValidationStatus={setFieldValidationStatus}
+                  validateFieldFunc={setFieldValidationStatusFunc}
+                  onChangeText={(value) => {
+                    setPassword(value);
+                  }}
+                />
+                <Pressable
+                  onPress={() => {
+                    router.push("/forgot_password");
+                  }}
+                >
+                  <View className="flex-row justify-end items-end">
+                    <Text className="font-semibold text-end text-primary-950 text-sm">
+                      Forgot Password?
+                    </Text>
+                  </View>
+                </Pressable>
+                <SubmitButton
+                  btnText="Log In"
+                  isLoading={isLoading}
+                  onPress={login}
+                />
+                {Platform.OS === "ios" ? (
+                  <Text className="mt-4 px-12 text-center text-sm">
+                    {/* To register your organization contact GoDesk Workplace Admin */}
+                    {/* <Text
                   onPress={() => {
                     Linking.openURL("https://workplace.godesk.co.in/login");
                   }}
-                  className="text-primary-950 font-bold"
+                  className="font-bold text-primary-950"
                 >
                   GoDesk Admin
                 </Text> */}
-              </Text>
-            ) : (
-              <Text className="mt-2 text-center text-sm">
-                Don't have a account?{" "}
-                <Link
-                  href="/registration/null"
-                  className="color-secondary-950 font-bold underline"
-                >
-                  Register Now
-                </Link>
-              </Text>
-            )}
-          </VStack>
-        </VStack>
-        <Text className=" text-sm text-center px-12 ">
-          By logging in, you agree to our{" "}
-          <Text
-            onPress={() => {
-              Linking.openURL("https://godesk.co.in/Privacy_Policy.html");
-            }}
-            className="text-primary-950 font-bold"
-          >
-            Terms & Conditions
-          </Text>{" "}
-          and{" "}
-          <Text
-            onPress={() => {
-              Linking.openURL("https://godesk.co.in/Privacy_Policy.html");
-            }}
-            className="font-bold text-primary-950"
-          >
-            Privacy Policy
+                  </Text>
+                ) : (
+                  <Text className="mt-2 text-center text-sm">
+                    Don't have a account?{" "}
+                    <Link
+                      href="/registration/null"
+                      className="font-bold underline color-secondary-950"
+                    >
+                      Register Now
+                    </Link>
+                  </Text>
+                )}
+              </View>
+            </View>
+          </ScrollView>
+          <Text className="px-12 text-center text-sm">
+            By logging in, you agree to our{" "}
+            <Text
+              onPress={() => {
+                Linking.openURL("https://godesk.co.in/Privacy_Policy.html");
+              }}
+              className="font-bold text-primary-950"
+            >
+              Terms & Conditions
+            </Text>{" "}
+            and{" "}
+            <Text
+              onPress={() => {
+                Linking.openURL("https://godesk.co.in/Privacy_Policy.html");
+              }}
+              className="font-bold text-primary-950"
+            >
+              Privacy Policy
+            </Text>
           </Text>
-        </Text>
-      </View>
-    </SafeAreaView>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -505,12 +505,13 @@ const RegistrationScreen = () => {
         <LoadingBar />
       ) : (
         <ScrollView automaticallyAdjustKeyboardInsets={true}>
-          <Box className="px-4 mb-12">
+          <Box className="mb-12 px-4">
             <VStack>
-              {/* <Text className="text-2xl font-bold">
+              {/* <Text>{JSON.str ingify(customerLeadDetailsModel)}</Text> */}
+              {/* <Text className="font-bold text-2xl">
                 Register Your Organization 🚀
               </Text>
-              <Text className="color-gray-500 text-sm mt-1">
+              <Text className="mt-1 text-sm color-gray-500">
                 Please provide the details below to register your organization.
                 As the POC (Point of Contact), you’ll be able to manage your
                 organization’s account, add users, and oversee the tickets
@@ -597,8 +598,12 @@ const RegistrationScreen = () => {
                   onItemSelect={(config) => {
                     setCustomerLeadDetailsModel((prevState) => {
                       prevState.typeOfOrg = config.id;
+                      if (prevState?.typeOfOrgDetails === undefined) {
+                        prevState.typeOfOrgDetails = config;
+                      }
                       return prevState;
                     });
+
                   }}
                 />
                 <ConfigurationDropdownFormField
@@ -616,6 +621,9 @@ const RegistrationScreen = () => {
                   onItemSelect={(config) => {
                     setCustomerLeadDetailsModel((prevState) => {
                       prevState.categoryOfOrg = config.id;
+                      if (prevState?.categoryOfOrgDetails === undefined) {
+                        prevState.categoryOfOrgDetails = config;
+                      }
                       return prevState;
                     });
                   }}
@@ -635,6 +643,9 @@ const RegistrationScreen = () => {
                   onItemSelect={(config) => {
                     setCustomerLeadDetailsModel((prevState) => {
                       prevState.sizeOfOrg = config.id;
+                      if (prevState?.sizeOfOrgDetails === undefined) {
+                        prevState.sizeOfOrgDetails = config;
+                      }
                       return prevState;
                     });
                   }}
@@ -653,7 +664,7 @@ const RegistrationScreen = () => {
                     const customRE =
                       /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
                     if (!customRE.test(value)) {
-                      return "Please enter a valid GST NO";
+                      return "Please enter a valid GSTIN No.";
                     }
                     return undefined;
                   }}
@@ -671,29 +682,38 @@ const RegistrationScreen = () => {
                   setFieldValidationStatus={setFieldValidationStatus}
                   validateFieldFunc={setFieldValidationStatusFunc}
                 />
-                <FormControl
-                  isInvalid={isFormFieldInValid("msmeNo", errors).length > 0}
-                >
-                  <FormControlLabel className="mb-1">
-                    <FormControlLabelText>MSME No.</FormControlLabelText>
-                  </FormControlLabel>
-                  <Input variant="outline" size="md">
-                    <InputField
-                      placeholder="ASDF1234QWER"
-                      defaultValue={customerLeadDetailsModel?.msmeNo ?? ""}
-                      onChangeText={(e) => {
-                        if (customerLeadDetailsModel) {
-                          customerLeadDetailsModel.msmeNo = e;
-                        }
-                      }}
-                    />
-                  </Input>
-                  <FormControlError>
-                    <FormControlErrorText>
-                      {isFormFieldInValid("msmeNo", errors)}
-                    </FormControlErrorText>
-                  </FormControlError>
-                </FormControl>
+                <PrimaryTextFormField
+                  fieldName="msmeNo"
+                  label="MSME No."
+                  placeholder="ASDF1234QWER"
+                  defaultValue={customerLeadDetailsModel.gstin}
+                  errors={errors}
+                  setErrors={setErrors}
+                  min={16}
+                  max={16}
+                  filterExp={/^[a-zA-Z0-9]*$/}
+                  customValidations={(value) => {
+                    const customRE =
+                      /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+                    if (!customRE.test(value)) {
+                      return "Please enter a valid MSME No.";
+                    }
+                    return undefined;
+                  }}
+                  isRequired={false}
+                  textCase={TextCase.uppercase}
+                  onChangeText={(value) => {
+                    console.log("value", value);
+                    setCustomerLeadDetailsModel((prevState) => {
+                      prevState.msmeNo = value;
+                      return prevState;
+                    });
+                  }}
+                  canValidateField={canValidateField}
+                  setCanValidateField={setCanValidateField}
+                  setFieldValidationStatus={setFieldValidationStatus}
+                  validateFieldFunc={setFieldValidationStatusFunc}
+                />
                 <PrimaryTextFormField
                   fieldName="firstName"
                   label="POC First Name"
@@ -846,7 +866,7 @@ const RegistrationScreen = () => {
                   validateFieldFunc={setFieldValidationStatusFunc}
                 />
               </VStack>
-              <Text className="font-bold text-lg mt-8">
+              <Text className="mt-8 font-bold text-lg">
                 Organization Address
               </Text>
               <VStack className="gap-4 mt-3">
@@ -890,10 +910,10 @@ const RegistrationScreen = () => {
                   setCanValidateField={setCanValidateField}
                   setFieldValidationStatus={setFieldValidationStatus}
                   validateFieldFunc={setFieldValidationStatusFunc}
-                  // defaultValue={{
-                  //   id: "asdf",
-                  //   title: "560078",
-                  // }}
+                // defaultValue={{
+                //   id: "asdf",
+                //   title: "560078",
+                // }}
                 />
                 <PrimaryTypeheadFormField
                   type={GeoLocationType.AREA}

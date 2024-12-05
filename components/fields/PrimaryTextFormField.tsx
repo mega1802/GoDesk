@@ -1,4 +1,4 @@
-import { View, Text, KeyboardTypeOptions, Pressable } from "react-native";
+import { View, Text, KeyboardTypeOptions, Pressable, TextInput } from "react-native";
 import React, { useEffect, useState } from "react";
 import { isFormFieldInValid, setErrorValue } from "@/utils/helper";
 import {
@@ -56,11 +56,17 @@ const PrimaryTextFormField = ({
   filterExp,
   customValidations,
   textCase = TextCase.freeform,
-  inputType = "text",
+  inputType,
   className = "",
 }: PrimaryTextFormFieldProps) => {
   const [value, setValue] = useState<string>("");
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isSecured, setIsSecured] = useState(false);
+
+  useEffect(() => {
+    if (inputType === "password") {
+      setIsSecured(true);
+    }
+  }, [inputType])
 
   useEffect(() => {
     setFieldValidationStatus((prevState: any) => ({
@@ -78,6 +84,7 @@ const PrimaryTextFormField = ({
       setCanValidateField(false);
     }
   }, [defaultValue, canValidateField]);
+
 
   const validateField = (newValue: string) => {
     if (isRequired && newValue.length === 0) {
@@ -126,9 +133,10 @@ const PrimaryTextFormField = ({
           {isRequired ? "*" : ""}
         </FormControlLabelAstrick>
       </FormControlLabel>
-      <Input variant="outline" size="md">
+      {/* <Input variant="outline" size="md" className="h-14" >
         <InputField
           type={isPasswordVisible ? "text" : inputType}
+          secureTextEntry={true}
           placeholder={placeholder}
           value={value}
           keyboardType={keyboardType}
@@ -180,7 +188,47 @@ const PrimaryTextFormField = ({
         ) : (
           <></>
         )}
-      </Input>
+      </Input> */}
+      <View
+        className="flex-row items-center border-[1px] border-gray-300 px-3 rounded-md h-14"
+      >
+        <TextInput
+          className="flex-1"
+          keyboardType={keyboardType}
+          placeholder={placeholder}
+          secureTextEntry={isSecured}
+          onChangeText={(newValue) => {
+            // if expression not null and value matches the expressions(regular expressions)
+            if (filterExp && !filterExp.test(newValue)) {
+              return;
+            }
+            const valLen = newValue.length;
+            let caseValue = newValue;
+            if (max && valLen <= max) {
+              switch (textCase) {
+                case TextCase.uppercase:
+                  caseValue = newValue.toUpperCase();
+                  break;
+                case TextCase.lowercase:
+                  caseValue = newValue.toLowerCase();
+                  break;
+              }
+              onChangeText(caseValue);
+              setValue(caseValue);
+            }
+            validateField(caseValue);
+          }}
+        />
+        {inputType === "password" && (
+          <Pressable
+            onPress={() => {
+              setIsSecured(!isSecured);
+            }}
+          >
+            <Feather name={isSecured ? "eye-off" : "eye"} className="me-3" size={16} color="#9ca3af" />
+          </Pressable>
+        )}
+      </View>
       <FormControlError>
         <FormControlErrorText>
           {isFormFieldInValid(fieldName, errors)}

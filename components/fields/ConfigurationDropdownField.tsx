@@ -66,13 +66,12 @@ const ConfigurationDropdownField = ({
         }
       }}
     >
-      <SelectTrigger variant="outline" size="md">
+      <SelectTrigger variant="outline" size="md" className="flex justify-between h-14">
         <SelectInput
-          className="w-96"
           placeholder={placeholder}
           value={selectedConfig.value}
         />
-        <SelectIcon className="mr-3 " as={ChevronDownIcon} />
+        <SelectIcon className="mr-3" as={ChevronDownIcon} />
       </SelectTrigger>
       <SelectPortal>
         <SelectBackdrop />

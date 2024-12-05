@@ -42,7 +42,7 @@ const PrimaryDropdownField = ({
         onItemSelect(type, e);
       }}
     >
-      <SelectTrigger variant="outline" className="flex justify-between w-full">
+      <SelectTrigger variant="outline" className="flex justify-between h-14">
         <SelectInput placeholder={placeholder} value={selectedValue.label} />
         <SelectIcon className="mr-3" as={ChevronDownIcon} />
       </SelectTrigger>

@@ -11,12 +11,12 @@ interface SubmitButtonProps {
 const SubmitButton = ({ isLoading, onPress, btnText }: SubmitButtonProps) => {
   return (
     <Button
-      className={`bg-primary-950 mt-6 h-12 shadow-sm rounded-lg`}
+      className={`bg-primary-950 mt-6 h-14 shadow-sm rounded-lg`}
       onPress={onPress}
       disabled={isLoading}
     >
       <ButtonText className="text-white">{btnText}</ButtonText>
-      {isLoading && <ButtonSpinner className="ms-2 text-white" />}
+      {isLoading && <ButtonSpinner className="text-white ms-2" />}
     </Button>
   );
 };
