@@ -116,9 +116,9 @@ const CheckInOutModal = ({
   };
 
   const takePhoto = async () => {
-    setSelfie(
-      "file:///Users/fci-1988/Library/Developer/CoreSimulator/Devices/2552B9A6-1492-49E4-88FE-BF21786D7E11/data/Containers/Data/Application/AE599E3E-E808-49A2-8A4A-FDE16DD81297/Library/Caches/ImagePicker/34E026E3-9107-4E08-BD66-54829AB346E1.png",
-    );
+    // setSelfie(
+    //   "file:///Users/fci-1988/Library/Developer/CoreSimulator/Devices/2552B9A6-1492-49E4-88FE-BF21786D7E11/data/Containers/Data/Application/AE599E3E-E808-49A2-8A4A-FDE16DD81297/Library/Caches/ImagePicker/34E026E3-9107-4E08-BD66-54829AB346E1.png",
+    // );
 
     const permissionsGranted = await requestCameraPermissions();
     if (!permissionsGranted) return;
@@ -181,9 +181,9 @@ const CheckInOutModal = ({
             date: moment().format("YYYY-MM-DD"),
             pincode: pincode?.length === 5 ? `560078` : pincode,
             checkInImage:
-              status === "Checked In" ? uploadedSelfie[0] : undefined,
+              status === undefined ? uploadedSelfie[0] : undefined,
             checkOutImage:
-              status !== "Checked In" ? uploadedSelfie[0] : undefined,
+              status === "Checked In" ? uploadedSelfie[0] : undefined,
           };
           api
             .put(CHECK_IN_OUT + `?attendanceId=${checkedInId}`, checkInOutModel)
@@ -200,7 +200,7 @@ const CheckInOutModal = ({
               onClose();
             })
             .catch((e) => {
-              // console.error(e.response);
+              console.error(e.response?.data);
               let errors = e.response?.data?.errors;
               if (errors) {
                 console.error("errors -> ", errors);
@@ -219,8 +219,8 @@ const CheckInOutModal = ({
         }
       })
       .catch((e) => {
-        let errors = e.response?.data?.errors;
-        console.log(errors);
+        let errors = e.response?.data;
+        console.log("errors ---->", errors);
         setIsLoading(false);
         setErrorMsg("Failed to check in");
       });
@@ -228,18 +228,19 @@ const CheckInOutModal = ({
 
   return (
     <BottomSheet initialHeight={500} ref={bottomSheetRef}>
-      <View className="p-4 gap-4">
-        <Text className="text-xl font-bold">
+      <View className="gap-4 p-4">
+        {/* <Text>{JSON.stringify(checkedInId)}</Text> */}
+        <Text className="font-bold text-xl">
           {status === "Checked In" ? "Check Out" : "Check In"}
         </Text>
         <View className="gap-5">
           <View className="">
-            <Text className="text-lg font-semibold">Start at</Text>
-            <Text className="text-md text-gray-700 mt-1">{currentTime}</Text>
+            <Text className="font-semibold text-lg">Start at</Text>
+            <Text className="mt-1 text-gray-700 text-md">{currentTime}</Text>
           </View>
           <View className="">
-            <Text className="text-lg font-semibold">Pincode</Text>
-            <Text className="text-md text-gray-700 mt-1">{pincode ?? "-"}</Text>
+            <Text className="font-semibold text-lg">Pincode</Text>
+            <Text className="mt-1 text-gray-700 text-md">{pincode ?? "-"}</Text>
           </View>
           <View className="flex-row justify-between">
             <FormControl
@@ -247,7 +248,7 @@ const CheckInOutModal = ({
               isInvalid={isFormFieldInValid("selfie", errors).length > 0}
             >
               <View className="">
-                <Text className="text-lg font-semibold">Selfie</Text>
+                <Text className="font-semibold text-lg">Selfie</Text>
                 {selfie.length === 0 ? (
                   <Pressable
                     onPress={() => {
@@ -277,9 +278,9 @@ const CheckInOutModal = ({
                   <View>
                     <Image
                       source={{ uri: selfie }}
-                      className="w-28 h-28 rounded-xl absolute mt-1"
+                      className="absolute mt-1 rounded-xl w-28 h-28"
                     />
-                    <View className="w-28 flex items-end gap-4 h-28 rounded-xl">
+                    <View className="flex items-end gap-4 rounded-xl w-28 h-28">
                       <Pressable
                         className="mt-2 me-2"
                         onPress={() => {
@@ -306,7 +307,7 @@ const CheckInOutModal = ({
           </View>
           {errorMsg && <Text className="mt-4 text-red-500">* {errorMsg}</Text>}
           <Button
-            className="bg-primary-950 mt-4 h-12 rounded-lg"
+            className="bg-primary-950 mt-4 rounded-lg h-12"
             onPress={() => {
               if (isLoading) return;
               chechInOut();

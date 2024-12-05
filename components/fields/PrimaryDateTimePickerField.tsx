@@ -34,10 +34,10 @@ const PrimaryDatetimePickerField = ({
           setOpen(true);
         }}
       >
-        <View className="border-gray-300 rounded border-[1px] flex-row justify-between px-3 py-2 items-center">
+        <View className="flex-row justify-between items-center border-[1px] border-gray-300 px-3 py-2 rounded h-14">
           {selectedValue.length === 0 ? (
             <Text className="flex-1 text-gray-400">{placeholder}</Text>
-          ) : (
+          ) : ( 
             <Text className="flex-1 text-gray-900">{selectedValue}</Text>
           )}
           <AntDesign name="calendar" size={20} color="#9ca3af" />

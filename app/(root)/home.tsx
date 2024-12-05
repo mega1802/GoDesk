@@ -82,13 +82,11 @@ const HomeScreen = () => {
 
   return (
     <View className="pb-2">
-      <VStack>
-        <ContentLayout
-          customerDetails={customerDetails}
-          roleDetails={roleDetails}
-          authorizedModules={authorizedModules}
-        />
-      </VStack>
+      <ContentLayout
+        customerDetails={customerDetails}
+        roleDetails={roleDetails}
+        authorizedModules={authorizedModules}
+      />
     </View>
   );
 };
