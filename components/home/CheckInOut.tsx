@@ -36,6 +36,7 @@ const CheckInOutModal = ({
   status,
   bottomSheetRef,
   checkedInId,
+  setIsModalVisible,
   onClose,
 }: CheckInOutProps) => {
   const [currentTime, setCurrentTime] = useState(
@@ -186,9 +187,11 @@ const CheckInOutModal = ({
               status === "Checked In" ? uploadedSelfie[0] : undefined,
           };
           api
-            .put(CHECK_IN_OUT + `?attendanceId=${checkedInId}`, checkInOutModel)
+            .put(CHECK_IN_OUT + (checkedInId ? `?attendanceId=${checkedInId}` : ''), checkInOutModel)
             .then((response) => {
               console.log(response.data.data);
+              // setIsModalVisible(false);
+              // bottomSheetRef
               setIsLoading(false);
               Toast.show({
                 type: "success",

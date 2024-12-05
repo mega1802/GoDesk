@@ -18,6 +18,8 @@ const TicketDetails = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
+    console.log("ticketModel", ticketModel);
+    
     navigation.setOptions({
       headerLeftContainerStyle: {
         paddingStart: 10,
@@ -41,14 +43,14 @@ const TicketDetails = () => {
   ) : (
     <ScrollView>
       <View className="p-4">
-        <View className="w-full bg-white px-3 py-3 rounded-lg">
+        <View className="bg-white px-3 py-3 rounded-lg w-full">
           <View className="flex">
             <View className="flex-row justify-between w-full">
               <View>
-                <Text className="text-gray-900 font-bold">
+                <Text className="font-bold text-gray-900">
                   {ticketModel?.ticketNo ?? "-"}
                 </Text>
-                <Text className="text-gray-500 text-[13px] mt-[1px]">
+                <Text className="mt-[1px] text-[13px] text-gray-500">
                   Issue in {ticketModel.issueTypeDetails?.name ?? "-"}
                 </Text>
               </View>
@@ -57,19 +59,19 @@ const TicketDetails = () => {
                 statusValue={ticketModel.statusDetails?.value}
               />
             </View>
-            <View className="border-dashed border-[1px] border-gray-300 h-[1px] mt-3 mb-3 w-full" />
+            <View className="border-[1px] border-gray-300 mt-3 mb-3 border-dashed w-full h-[1px]" />
             <View className="w-full">
-              <View className="flex-row items-center justify-between">
+              <View className="flex-row justify-between items-center">
                 <View className="flex">
-                  <Text className="text-gray-500 text-md ">Raised by</Text>
-                  <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                  <Text className="text-gray-500 text-md">Raised by</Text>
+                  <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                     {ticketModel?.customerDetails?.firstName ?? "-"}{" "}
                     {ticketModel?.customerDetails?.lastName ?? ""}
                   </Text>
                 </View>
                 <View className="flex items-end">
-                  <Text className="text-gray-500 text-md ">Raised At</Text>
-                  <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                  <Text className="text-gray-500 text-md">Raised At</Text>
+                  <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                     {ticketModel.createdAt
                       ? moment(ticketModel.createdAt).fromNow()
                       : "-"}
@@ -77,31 +79,31 @@ const TicketDetails = () => {
                 </View>
               </View>
             </View>
-            <View className="w-full mt-3">
-              <View className="flex-row items-center justify-between">
+            <View className="mt-3 w-full">
+              <View className="flex-row justify-between items-center">
                 <View className="flex">
-                  <Text className="text-gray-500 text-md ">Serial No</Text>
-                  <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                  <Text className="text-gray-500 text-md">Serial No</Text>
+                  <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                     {ticketModel?.assetInUseDetails?.serialNo ?? "-"}
                   </Text>
                 </View>
                 <View className="flex items-end">
-                  <Text className="text-gray-500 text-md ">Asset Type</Text>
-                  <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                  <Text className="text-gray-500 text-md">Asset Type</Text>
+                  <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                     {ticketModel.assetInUseDetails?.assetMasterDetails
                       ?.assetTypeDetails?.name ?? "-"}
                   </Text>
                 </View>
               </View>
             </View>
-            <View className="w-full mt-3">
-              <Text className="text-gray-500 text-md ">Description</Text>
-              <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+            <View className="mt-3 w-full">
+              <Text className="text-gray-500 text-md">Description</Text>
+              <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                 {ticketModel?.description ?? "-"}
               </Text>
             </View>
-            <View className="w-full mt-3">
-              <Text className="text-gray-500 text-md ">Issue Images</Text>
+            <View className="mt-3 w-full">
+              <Text className="text-gray-500 text-md">Issue Images</Text>
               {(ticketModel.ticketImages ?? []).length > 0 ? (
                 ticketModel.ticketImages?.map((uri, index) => (
                   <Pressable
@@ -116,7 +118,7 @@ const TicketDetails = () => {
                   >
                     <Image
                       source={{ uri: uri }}
-                      className="w-24 h-24 rounded-xl mt-2"
+                      className="mt-2 rounded-xl w-24 h-24"
                     />
                   </Pressable>
                 ))
@@ -124,19 +126,19 @@ const TicketDetails = () => {
                 <Text>-</Text>
               )}
             </View>
-            <View className="w-full mt-3">
+            <View className="mt-3 w-full">
               <View>
-                <Text className="text-gray-500 text-md ">Assinged To</Text>
-                <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                <Text className="text-gray-500 text-md">Assinged To</Text>
+                <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                   {ticketModel?.lastAssignedToDetails?.firstName ??
                     "-" + (ticketModel?.lastAssignedToDetails?.lastName ?? "")}
                 </Text>
               </View>
             </View>
-            <View className="w-full mt-3">
+            <View className="mt-3 w-full">
               <View>
-                <Text className="text-gray-500 text-md ">Assinged At</Text>
-                <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                <Text className="text-gray-500 text-md">Assinged At</Text>
+                <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                   {ticketModel.lastAssignedToDetails?.assignedAt
                     ? moment(
                         ticketModel.lastAssignedToDetails?.assignedAt,

@@ -13,7 +13,7 @@ interface DeviceListItemLayoutProps {
 const DeviceListItemLayout = ({ data }: DeviceListItemLayoutProps) => {
   return (
     <View className="px-4 py-2">
-      <View className="w-full bg-white px-3 py-3 rounded-lg shadow-sm">
+      <View className="bg-white shadow-sm px-3 py-3 rounded-lg w-full">
         <Pressable
           onPress={() =>
             router.push({
@@ -25,50 +25,50 @@ const DeviceListItemLayout = ({ data }: DeviceListItemLayoutProps) => {
           }
         >
           <View className="flex">
-            <View className="w-full ">
-              <View className="flex-row items-center justify-between">
+            <View className="w-full">
+              <View className="flex-row justify-between items-center">
                 <View className="flex">
                   <Text className="text-gray-500 text-md">Serial No.</Text>
-                  <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                  <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                     {data.serialNo ?? "-"}
                   </Text>
                 </View>
                 <View className="flex items-end">
                   <Text className="text-gray-500 text-md">Asset Type</Text>
-                  <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                  <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                     {data.assetTypeDetails?.name ?? "-"}
                   </Text>
                 </View>
               </View>
             </View>
-            {/* <View className="w-full mt-3">
-                <View className="flex-row items-center justify-between">
+            {/* <View className="mt-3 w-full">
+                <View className="flex-row justify-between items-center">
                   <View className="flex">
                     <Text className="text-gray-500 text-md">Model Name</Text>
-                    <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                    <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                       {item.assetModelDetails?.modelName ?? "-"}
                     </Text>
                   </View>
                   <View className="flex items-end">
                     <Text className="text-gray-500 text-md">Model Number</Text>
-                    <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                    <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                       {item.assetModelDetails?.modelNumber ?? "-"}
                     </Text>
                   </View>
                 </View>
               </View> */}
-            <View className="w-full mt-3">
-              <View className="flex-row items-center justify-between">
+            <View className="mt-3 w-full">
+              <View className="flex-row justify-between items-center">
                 <View className="flex">
                   <Text className="text-gray-500 text-md">
                     Unique Identifier
                   </Text>
-                  <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                  <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                     {data.uniqueIdentifier ?? "-"}
                   </Text>
                 </View>
                 <View className="flex">
-                  <Text className="text-gray-500 text-md ">Asset Status</Text>
+                  <Text className="text-gray-500 text-md">Asset Status</Text>
                   <View
                     className={`mt-1 flex-row justify-center py-2 rounded-md ${getDeviceStatusColor(data.assetStatusDetails?.key)}`}
                   >
@@ -81,27 +81,27 @@ const DeviceListItemLayout = ({ data }: DeviceListItemLayoutProps) => {
                 </View>
               </View>
             </View>
-            {/* <View className="border-[.5px] border-gray-300 h-[1px] mt-3 mb-3 w-full" />
+            {/* <View className="border-[.5px] border-gray-300 mt-3 mb-3 w-full h-[1px]" />
            <View className="w-full">
-              <View className="flex-row items-center justify-between">
+              <View className="flex-row justify-between items-center">
                 <View className="flex">
-                  <Text className="text-gray-500 text-md ">Raised Tickets</Text>
-                  <Text className="text-md text-gray-900 font-semibold ">
+                  <Text className="text-gray-500 text-md">Raised Tickets</Text>
+                  <Text className="font-semibold text-gray-900 text-md">
                     11
                   </Text>
                 </View>
                 <View className="flex items-end">
-                  <Text className="text-gray-500 text-md ">
+                  <Text className="text-gray-500 text-md">
                     Last Ticket Status
                   </Text>
-                  <Text className="text-md text-gray-900 font-semibold ">
+                  <Text className="font-semibold text-gray-900 text-md">
                     Raised
                   </Text>
                 </View>
               </View>
             </View> */}
-            <View className=" border-[.5px] border-gray-300 h-[1px] mt-3 mb-3 w-full" />
-            <View className="flex-row justify-between w-full items-center">
+            <View className="border-[.5px] border-gray-300 mt-3 mb-3 w-full h-[1px]" />
+            <View className="flex-row justify-between items-center w-full">
               <View className="flex-row items-center">
                 {/* <Image
                   source={{
@@ -111,33 +111,33 @@ const DeviceListItemLayout = ({ data }: DeviceListItemLayoutProps) => {
                   height={35}
                   className="rounded-full"
                 /> */}
-                <View className="bg-gray-100 p-2 rounded-full">
+                <View className="flex justify-center items-center bg-gray-100 rounded-full w-16 h-16">
                   <Feather name="user" size={24} color="#9ca3af" />
                 </View>
                 <View className="ms-2">
-                  <Text className="text-gray-500 text-[13px] mt-[1px]">
+                  <Text className="mt-[1px] text-[13px] text-gray-500">
                     Assigned To
                   </Text>
-                  <Text className="font-bold ">
+                  <Text className="font-bold">
                     {(data.userAssignedToDetails?.firstName ?? "- ") +
                       (data.userAssignedToDetails?.lastName ?? "")}
                   </Text>
                 </View>
               </View>
-              <View className="ms-2 flex items-end">
-                <Text className="text-gray-500 text-[13px] mt-[1px]">
+              <View className="flex items-end ms-2">
+                <Text className="mt-[1px] text-[13px] text-gray-500">
                   Assigned At
                 </Text>
                 <Text className="font-bold">
                   {data.userAssignedToDetails?.createdAt
                     ? moment(data.userAssignedToDetails?.createdAt).format(
-                        "DD-MM-YYYY",
-                      )
+                      "DD-MM-YYYY",
+                    )
                     : "-"}
                 </Text>
               </View>
-              {/* <View className="flex items-end  ">
-                  <Text className="text-gray-500 text-[13px]">Status</Text>
+              {/* <View className="flex items-end">
+                  <Text className="text-[13px] text-gray-500">Status</Text>
                   <View
                     className={`px-4 py-2 rounded-md ${getDeviceStatusColor(item.assetStatusDetails?.key)}`}
                   >

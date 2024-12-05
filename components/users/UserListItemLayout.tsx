@@ -35,7 +35,7 @@ const UserListItemLayout = ({ userDetailsModel }: UserListItemLayoutProps) => {
       }
       className="px-4 py-2"
     >
-      <View className="w-full bg-white px-3 py-3 rounded-lg shadow-sm">
+      <View className="bg-white shadow px-3 py-3 rounded-lg w-full">
         <View className="flex">
           <View className="flex-row justify-between w-full">
             <View className="flex-row items-center">
@@ -47,7 +47,7 @@ const UserListItemLayout = ({ userDetailsModel }: UserListItemLayoutProps) => {
                 height={35}
                 className="rounded-full"
               /> */}
-              <View className="bg-gray-100 p-2 rounded-full">
+              <View className="flex justify-center items-center bg-gray-100 rounded-full w-16 h-16">
                 <Feather name="user" size={24} color="#9ca3af" />
               </View>
               <View className="ms-2">
@@ -55,7 +55,7 @@ const UserListItemLayout = ({ userDetailsModel }: UserListItemLayoutProps) => {
                   {userDetailsModel.firstName ?? "-"}{" "}
                   {userDetailsModel.lastName ?? ""}
                 </Text>
-                <Text className="text-gray-500 text-[13px] mt-[1px]">
+                <Text className="mt-[1px] text-[13px] text-gray-500">
                   {userDetailsModel.mobile ?? "-"}
                 </Text>
               </View>
@@ -72,36 +72,36 @@ const UserListItemLayout = ({ userDetailsModel }: UserListItemLayoutProps) => {
               </View>
             </View>
           </View>
-          <View className="w-full mt-3">
-            <View className="flex-row items-center justify-between">
+          <View className="mt-3 w-full">
+            <View className="flex-row justify-between items-center">
               <View className="flex">
-                <Text className="text-gray-500 text-md ">Department</Text>
-                <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                <Text className="text-gray-500 text-md">Department</Text>
+                <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                   {userDetailsModel.departmentDetails?.name ?? "-"}
                 </Text>
               </View>
               <View className="flex items-end">
-                <Text className="text-gray-500 text-md ">Designation</Text>
-                <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                <Text className="text-gray-500 text-md">Designation</Text>
+                <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                   {userDetailsModel.designationDetails?.name ?? "-"}
                 </Text>
               </View>
             </View>
           </View>
-          <View className="border-dashed border-[1px] border-gray-300 h-[1px] mt-3 mb-3 w-full" />
+          <View className="border-[1px] border-gray-300 mt-3 mb-3 border-dashed w-full h-[1px]" />
           <View className="w-full">
-            <View className="flex-row items-center justify-between">
+            <View className="flex-row justify-between items-center">
               <View className="flex">
-                <Text className="text-gray-500 text-md ">Raised Tickets</Text>
-                <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                <Text className="text-gray-500 text-md">Raised Tickets</Text>
+                <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                   {userDetailsModel.ticketDetails?.raisedTicketCount ?? "-"}
                 </Text>
               </View>
               <View className="flex items-end">
-                <Text className="text-gray-500 text-md ">
+                <Text className="text-gray-500 text-md">
                   Last Ticket Status
                 </Text>
-                <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
+                <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                   {userDetailsModel.ticketDetails?.lastTicketStatus ?? "-"}
                 </Text>
               </View>
