@@ -22,7 +22,7 @@ import CheckIn from "./CheckInOut";
 import api from "@/services/api";
 import { GET_CHECK_IN_OUT_STATUS } from "@/constants/api_endpoints";
 import CheckInOutModal from "./CheckInOut";
-
+import { useTranslation } from 'react-i18next';
 const ContentLayout = ({
   customerDetails,
   authorizedModules,
@@ -36,7 +36,7 @@ const ContentLayout = ({
 
   const bottomSheetRef = useRef(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const { t, i18n } = useTranslation();
   const [checkInOutStatusDetails, setCheckInOutStatusDetails] =
     useState<CheckInOutStatusDetailsModel>({});
 
@@ -57,7 +57,7 @@ const ContentLayout = ({
       if (!ticketsTabAdded) {
         setServiceTabs((prev) => {
           prev.push({
-            label: "Tickets",
+            label: t('Tickets'),
             icon: <Ionicons name="ticket-outline" size={20} color="#39a676" />,
             path: "/tickets/tickets_history/list/[customerId]",
             params: {
@@ -81,13 +81,13 @@ const ContentLayout = ({
           return [
             ...prev,
             {
-              label: "Devices",
+              label: t("Devices"),
               icon: <AntDesign name="laptop" size={20} color="#39a676" />,
               path: "/devices/devices_list",
               code: "DEVICES",
             },
             {
-              label: " Users",
+              label: t("Users"),
               icon: <AntDesign name="laptop" size={20} color="#39a676" />,
               path: "/users/users_list",
               code: "USERS",
@@ -141,10 +141,10 @@ const ContentLayout = ({
                   }}
                 >
                   <ButtonText>
-                    {checkInOutStatusDetails.value === "Checked In"
-                      ? "Check Out"
-                      : "Check In"}
-                  </ButtonText>
+                  {checkInOutStatusDetails.value === "Checked In"
+                    ? t('checkOut')
+                    : t('checkIn')}
+                </ButtonText>
                 </Button>
               </View>
             )}
@@ -155,7 +155,7 @@ const ContentLayout = ({
             <VStack className="w-44 justify-evenly my-3">
               <VStack>
                 <Text className="text-2xl font-medium">
-                  Having trouble with your
+                  {t('Having trouble with your Device')}
                   <Text className="text-primary-950"> Device?</Text>
                 </Text>
               </VStack>
@@ -170,7 +170,7 @@ const ContentLayout = ({
                   })
                 }
               >
-                <ButtonText>Raise Ticket</ButtonText>
+                <ButtonText>{t('Raise Ticket')}</ButtonText>
                 <AntDesign
                   name="arrowright"
                   className="ms-3"
@@ -187,7 +187,7 @@ const ContentLayout = ({
         </View>
         {serviceTabs && (
           <VStack className="mt-4">
-            <Text className="text-[16px] font-bold">Quick Actions</Text>
+            <Text className="text-[16px] font-bold">{t('Quick Actions')}</Text>
             <FlatList
               className="mt-2"
               data={serviceTabs}
@@ -222,7 +222,7 @@ const ContentLayout = ({
         )}
         <HStack className="justify-between mt-4">
           <View className="flex-row items-center">
-            <Text className="text-[16px] font-bold">Recent Tickets</Text>
+            <Text className="text-[16px] font-bold">{t('Recent Tickets')}</Text>
             <Ionicons
               name="ticket-outline"
               size={20}

@@ -264,7 +264,7 @@ const CreateDevice = () => {
           className="mb-3"
           fieldName="serialNo"
           label="Serial No."
-          placeholder="Enter here"
+          placeholder="Enter serial no."
           errors={errors}
           setErrors={setErrors}
           min={5}
@@ -287,7 +287,7 @@ const CreateDevice = () => {
           className="mb-3"
           fieldName="purchaseId"
           label="Purchase Id"
-          placeholder="Enter here"
+          placeholder="Enter purchase id"
           errors={errors}
           setErrors={setErrors}
           min={5}
@@ -329,7 +329,7 @@ const CreateDevice = () => {
           className="mb-3"
           fieldName="uniqueIdentifier"
           label="Unique Identifier"
-          placeholder="Enter here"
+          placeholder="Enter unique identifier"
           errors={errors}
           setErrors={setErrors}
           min={4}
@@ -427,7 +427,7 @@ const CreateDevice = () => {
           }}
         />
         <PrimaryDatetimePickerFormField
-          label="OME Warranty Date"
+          label="OEM Warranty Date"
           fieldName="oemWarrantyDate"
           errors={errors}
           setErrors={setErrors}

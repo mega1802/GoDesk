@@ -7,7 +7,7 @@ import {
 } from "@/constants/configuration_keys";
 import { ErrorModel } from "@/models/common";
 import moment from "moment";
-
+import { useTranslation } from 'react-i18next';
 export const isFormFieldInValid = (
   name: string,
   errors: ErrorModel[],
@@ -102,14 +102,14 @@ export function bytesToMB(bytes: number) {
 
 export function getGreetingMessage() {
   const currentHour = moment().hour();
-
+  const { t, i18n } = useTranslation();
   if (currentHour >= 5 && currentHour < 12) {
-    return "Good Morning";
+    return t('goodMorning'); 
   } else if (currentHour >= 12 && currentHour < 17) {
-    return "Good Afternoon";
+    return t('goodAfternoon'); 
   } else if (currentHour >= 17 && currentHour < 21) {
-    return "Good Evening";
+    return t('goodEvening'); 
   } else {
-    return "Hello";
+    return t('hello'); 
   }
 }

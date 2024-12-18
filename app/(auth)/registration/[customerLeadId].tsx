@@ -52,7 +52,7 @@ import Toast from "react-native-toast-message";
 import { clearStorage, getItem, setItem } from "@/utils/secure_store";
 import { BASE_URL } from "@/config/env";
 import axios from "axios";
-
+import { useTranslation } from 'react-i18next'; 
 const RegistrationScreen = () => {
   // geolocations
   const [pincodes, setPincodes] = useState<DropdownItemModel[]>([]);
@@ -73,7 +73,7 @@ const RegistrationScreen = () => {
 
   const [customerLeadDetailsModel, setCustomerLeadDetailsModel] =
     useState<CustomerLeadDetailsModel>({});
-
+ const { t, i18n } = useTranslation(); 
   const router = useRouter();
 
   const [isLead, setIsLead] = useState(false);
@@ -520,7 +520,7 @@ const RegistrationScreen = () => {
               <VStack className="gap-4 mt-3">
                 <ImageFormField
                   fieldName="orgImage"
-                  label="Organization Image"
+                  label={t('organization_image')}
                   canValidateField={canValidateField}
                   setCanValidateField={setCanValidateField}
                   setFieldValidationStatus={setFieldValidationStatus}
@@ -532,8 +532,8 @@ const RegistrationScreen = () => {
                 />
                 <PrimaryTextFormField
                   fieldName="orgName"
-                  label="Organization Name"
-                  placeholder="Enter here"
+                  label={t('organization_name')}
+                  placeholder="Enter organization name "
                   errors={errors}
                   setErrors={setErrors}
                   min={3}
@@ -553,8 +553,8 @@ const RegistrationScreen = () => {
                 />
                 <PrimaryTextFormField
                   fieldName="orgMobile"
-                  label="Organization Mobile No."
-                  placeholder="Enter here"
+                  label={t('organization_mobile_no')}
+                  placeholder="Enter organization mobile no  "
                   defaultValue={customerLeadDetailsModel.orgMobile}
                   errors={errors}
                   setErrors={setErrors}
@@ -586,7 +586,7 @@ const RegistrationScreen = () => {
                 <ConfigurationDropdownFormField
                   configurationCategory={TYPE_OF_ORG}
                   placeholder="Select type"
-                  label="Type of organization"
+                  label={t('type_of_organization')}
                   defaultValue={customerLeadDetailsModel?.typeOfOrgDetails}
                   errors={errors}
                   setErrors={setErrors}
@@ -609,7 +609,7 @@ const RegistrationScreen = () => {
                 <ConfigurationDropdownFormField
                   configurationCategory={CATEGORY_OF_ORG}
                   placeholder="Select category"
-                  label="Category of organization"
+                  label={t('category_of_organization')}
                   defaultValue={customerLeadDetailsModel?.categoryOfOrgDetails}
                   errors={errors}
                   setErrors={setErrors}
@@ -631,7 +631,7 @@ const RegistrationScreen = () => {
                 <ConfigurationDropdownFormField
                   configurationCategory={SIZE_OF_ORG}
                   placeholder="Select size"
-                  label="Size of organization"
+                  label={t('size_of_organization')}
                   defaultValue={customerLeadDetailsModel?.sizeOfOrgDetails}
                   errors={errors}
                   setErrors={setErrors}
@@ -652,7 +652,7 @@ const RegistrationScreen = () => {
                 />
                 <PrimaryTextFormField
                   fieldName="gstin"
-                  label="GSTIN No."
+                  label={t('gstin_no')}
                   placeholder="22AAAAA0000A1Z5"
                   defaultValue={customerLeadDetailsModel.gstin}
                   errors={errors}
@@ -684,7 +684,7 @@ const RegistrationScreen = () => {
                 />
                 <PrimaryTextFormField
                   fieldName="msmeNo"
-                  label="MSME No."
+                  label={t('msme_no')}
                   placeholder="ASDF1234QWER"
                   defaultValue={customerLeadDetailsModel.gstin}
                   errors={errors}
@@ -716,8 +716,8 @@ const RegistrationScreen = () => {
                 />
                 <PrimaryTextFormField
                   fieldName="firstName"
-                  label="POC First Name"
-                  placeholder="Enter here"
+                  label={t('poc_first_name')}
+                  placeholder="Enter  first name"
                   errors={errors}
                   setErrors={setErrors}
                   min={3}
@@ -736,8 +736,8 @@ const RegistrationScreen = () => {
                 />
                 <PrimaryTextFormField
                   fieldName="lastName"
-                  label="POC Last Name"
-                  placeholder="Enter here"
+                  label={t('poc_last_name')}
+                  placeholder="Enter  last name"
                   errors={errors}
                   setErrors={setErrors}
                   defaultValue={customerLeadDetailsModel.lastName}
@@ -756,8 +756,8 @@ const RegistrationScreen = () => {
                 />
                 <PrimaryTextFormField
                   fieldName="email"
-                  label="POC Email"
-                  placeholder="Enter here"
+                  label={t('poc_email')}
+                  placeholder="Enter email"
                   defaultValue={customerLeadDetailsModel.email}
                   errors={errors}
                   setErrors={setErrors}
@@ -784,8 +784,8 @@ const RegistrationScreen = () => {
                 />
                 <PrimaryTextFormField
                   fieldName="mobile"
-                  label="POC Mobile No."
-                  placeholder="Enter here"
+                  label={t('poc_mobile_no')}
+                  placeholder="Enter mobile no"
                   defaultValue={customerLeadDetailsModel.mobile}
                   errors={errors}
                   setErrors={setErrors}
@@ -814,8 +814,8 @@ const RegistrationScreen = () => {
                 />
                 <PrimaryTextFormField
                   fieldName="alternateMobile"
-                  label="POC Alternate Mobile No."
-                  placeholder="Enter here"
+                  label={t('poc_alternate_mobile_no')}
+                  placeholder="Enter alternate mobile no "
                   defaultValue={customerLeadDetailsModel.alternateMobile}
                   errors={errors}
                   setErrors={setErrors}
@@ -846,7 +846,7 @@ const RegistrationScreen = () => {
                 />
                 <PrimaryTextareaFormField
                   fieldName="description"
-                  label="Description"
+                  label={t('description')}
                   placeholder="Write a short description about your organization"
                   errors={errors}
                   setErrors={setErrors}
@@ -867,13 +867,13 @@ const RegistrationScreen = () => {
                 />
               </VStack>
               <Text className="mt-8 font-bold text-lg">
-                Organization Address
+             {t('organization_address')}
               </Text>
               <VStack className="gap-4 mt-3">
                 <PrimaryTextFormField
                   fieldName="address"
-                  label="Address"
-                  placeholder="Enter here"
+                  label={t('address')}
+                  placeholder="Enter address"
                   errors={errors}
                   setErrors={setErrors}
                   min={4}
@@ -899,7 +899,7 @@ const RegistrationScreen = () => {
                   setSelectedValue={setSelectedPincode}
                   placeholder="Search pincode"
                   fieldName="pincodeId"
-                  label="Pincode"
+                  label={t('pincode')}
                   supportText="Please enter the first three digits of your postal code to
                     view nearby locations."
                   errors={errors}
@@ -933,7 +933,7 @@ const RegistrationScreen = () => {
                   setSelectedValue={setSelectedArea}
                   placeholder="Search area"
                   fieldName="areaId"
-                  label="Area"
+                  label={t('area')}
                   errors={errors}
                   setErrors={setErrors}
                   editable={selectedPincode?.id !== undefined}
@@ -951,7 +951,7 @@ const RegistrationScreen = () => {
                   setSelectedValue={setSelectedCity}
                   placeholder="Search city"
                   fieldName="cityId"
-                  label="City"
+                  label={t('city')}
                   errors={errors}
                   setErrors={setErrors}
                   editable={false}
@@ -969,7 +969,7 @@ const RegistrationScreen = () => {
                   setSelectedValue={setSelectedState}
                   placeholder="Search state"
                   fieldName="stateId"
-                  label="State"
+                  label={t('state')}
                   errors={errors}
                   setErrors={setErrors}
                   editable={false}
@@ -987,7 +987,7 @@ const RegistrationScreen = () => {
                   setSelectedValue={setSelectedCountry}
                   placeholder="Search country"
                   fieldName="countryId"
-                  label="Country"
+                  label={t('country')}
                   errors={errors}
                   setErrors={setErrors}
                   editable={false}
@@ -1000,7 +1000,7 @@ const RegistrationScreen = () => {
               <SubmitButton
                 isLoading={isLoading}
                 onPress={updateCustomerLeadDetails}
-                btnText="Save"
+                btnText={t('save')}
               />
             </VStack>
           </Box>

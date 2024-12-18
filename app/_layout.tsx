@@ -128,6 +128,7 @@ export default function RootLayout() {
                 name="tickets/tickets_history/details/[ticketId]"
                 options={{ headerTitle: "Ticket Details", headerBackTitle: "" }}
               />
+               <Stack.Screen name="translation/[homescreen]" options={{ headerShown: false }} />
               {/*Settings */}
               {/* <Stack.Screen
                 name="settings/change_password"

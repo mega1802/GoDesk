@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Keyboard, KeyboardAvoidingView, Linking, Platform, Pressable, ScrollView, Text, TouchableWithoutFeedback, View } from "react-native";
 import { VStack } from "@/components/ui/vstack";
 import { Link, useRouter } from "expo-router";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import {
   GET_CUSTOMER_LEAD_DETAILS,
   GET_USER_DETAILS,
@@ -24,6 +24,8 @@ import Toast from "react-native-toast-message";
 import PrimaryTextFormField from "@/components/fields/PrimaryTextFormField";
 import { UserDetailsModel } from "@/models/users";
 import React from "react";
+import { useTranslation } from 'react-i18next';  // Import the translation hook
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState<string>("");
@@ -34,7 +36,8 @@ const LoginScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
-
+  const { t, i18n } = useTranslation(); 
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
   // can validate fields
   const [canValidateField, setCanValidateField] = useState(false);
 
@@ -53,7 +56,7 @@ const LoginScreen = () => {
     );
 
     setCanValidateField(true);
-
+   
     // Wait for all validations to complete
     await Promise.all(validationPromises);
 
@@ -207,7 +210,17 @@ const LoginScreen = () => {
         });
     }
   };
+  useEffect(() => {
+    const fetchLanguage = async () => {
+      const storedLanguage = await AsyncStorage.getItem('language');
+      if (storedLanguage) {
+        setSelectedLanguage(storedLanguage);
+        i18n.changeLanguage(storedLanguage); // Set language from AsyncStorage
+      }
+    };
 
+    fetchLanguage();
+  }, []);
   const setFieldValidationStatusFunc = (
     fieldName: string,
     isValid: boolean,
@@ -227,15 +240,17 @@ const LoginScreen = () => {
           <ScrollView>
             <View className="mt-2 p-4 h-full">
               <Text className="font-bold text-2xl text-primary-950">
-                Welcome 👋
+              {t('welcome')} 👋
               </Text>
               <Text className="mt-1 text-md leading-6 color-gray-400 pe-4">
-                Log in to manage your organization's IT issues seamlessly
+               {t('login_message')}
               </Text>
+              <Text><Link href={'/data_storage/homescreen'} >language</Link></Text>
+             
               <View className="gap-4 mt-4">
                 <PrimaryTextFormField
                   fieldName="email"
-                  label="Email"
+                  label={t('email')}
                   placeholder="customer@business.com"
                   errors={errors}
                   setErrors={setErrors}
@@ -260,7 +275,7 @@ const LoginScreen = () => {
                 <PrimaryTextFormField
                   inputType="password"
                   fieldName="password"
-                  label="Password"
+                  label={t('password')}
                   placeholder="•••••••••"
                   errors={errors}
                   setErrors={setErrors}
@@ -282,12 +297,12 @@ const LoginScreen = () => {
                 >
                   <View className="flex-row justify-end items-end">
                     <Text className="font-semibold text-end text-primary-950 text-sm">
-                      Forgot Password?
+                      {t('forgot_password')}
                     </Text>
                   </View>
                 </Pressable>
                 <SubmitButton
-                  btnText="Log In"
+                  btnText={t('Login')}
                   isLoading={isLoading}
                   onPress={login}
                 />
@@ -304,37 +319,37 @@ const LoginScreen = () => {
                 </Text> */}
                   </Text>
                 ) : (
-                  <Text className="mt-2 text-center text-sm">
-                    Don't have a account?{" "}
+                  <Text className=" text-center text-sm">
+                    {t('dont_have_account')}{" "}
                     <Link
                       href="/registration/null"
                       className="font-bold underline color-secondary-950"
                     >
-                      Register Now
+                     {t('register_now')}
                     </Link>
                   </Text>
                 )}
               </View>
             </View>
           </ScrollView>
-          <Text className="px-12 text-center text-sm">
-            By logging in, you agree to our{" "}
+          <Text className="px-12 text-center  text-sm">
+          {t('loginAgreement')}{" "}
             <Text
               onPress={() => {
                 Linking.openURL("https://godesk.co.in/Privacy_Policy.html");
               }}
               className="font-bold text-primary-950"
             >
-              Terms & Conditions
+              {t("terms_conditions")}
             </Text>{" "}
-            and{" "}
+            {t('and')}{" "}
             <Text
               onPress={() => {
                 Linking.openURL("https://godesk.co.in/Privacy_Policy.html");
               }}
               className="font-bold text-primary-950"
             >
-              Privacy Policy
+              {t("privacy_policy")}
             </Text>
           </Text>
         </View>

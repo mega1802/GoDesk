@@ -12,7 +12,7 @@ import {
 } from "@/constants/api_endpoints";
 import Toast from "react-native-toast-message";
 import { router } from "expo-router";
-
+import { useTranslation } from 'react-i18next';
 enum PasswordChangeStatus {
   none,
   otpSent,
@@ -20,6 +20,7 @@ enum PasswordChangeStatus {
 }
 
 const ForgotPassword = () => {
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState<string>("");
   const [otp, setOTP] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
@@ -49,7 +50,7 @@ const ForgotPassword = () => {
   const getButtonText = (): string => {
     switch (passwordChangeStatus) {
       case PasswordChangeStatus.none:
-        return "Send OTP";
+        return t('send OTP');
       case PasswordChangeStatus.otpSent:
         return "Verify OTP";
       case PasswordChangeStatus.otpVerified:
@@ -257,36 +258,37 @@ const ForgotPassword = () => {
           }}
         >
           <View className=" flex-row px-4 items-center">
-            <MaterialIcons name="arrow-back-ios" size={20} color="#009c68" />
-            <Text className="text-primary-950 text-xl">Login</Text>
+            <MaterialIcons className="mt-4" name="arrow-back-ios" size={20} color="#009c68" />
+            <Text className="text-primary-950 text-xl mt-4">{t('Login')}</Text>
           </View>
         </Pressable>
         <View className="p-4">
           {passwordChangeStatus === PasswordChangeStatus.none ? (
             <View>
               <Text className="text-2xl font-bold ">
-                Forgot <Text className="text-primary-950">Password </Text>🤔
+                 <Text className="text-primary-950">{t('forgot_password')} </Text>🤔
               </Text>
               <Text className="color-gray-400 text-md mt-1 pe-4 leading-6">
-                Enter your email below to get OTP to change your password
+                {t('enter_email')}
               </Text>
             </View>
           ) : passwordChangeStatus === PasswordChangeStatus.otpSent ? (
             <View>
               <Text className="text-2xl font-bold ">
-                Verify <Text className="text-primary-950">OTP</Text>
+               {t('verify')} <Text className="text-primary-950">{t('otp')}</Text>
               </Text>
               <Text className="color-gray-400 text-md mt-1 pe-4 leading-6">
-                An OTP has been sent to your email. Please enter it below.
+                {t('otp_sent')}
               </Text>
+              
             </View>
           ) : (
             <View>
               <Text className="text-2xl font-bold ">
-                Change <Text className="text-primary-950">Password</Text>
+                {t('change')} <Text className="text-primary-950">{t('password')}</Text>
               </Text>
               <Text className="color-gray-400 text-md mt-1 pe-4 leading-6">
-                Enter a valid password and confirm password
+               {t('enter_valid_password')}
               </Text>
             </View>
           )}
@@ -295,7 +297,7 @@ const ForgotPassword = () => {
           >
             <PrimaryTextFormField
               fieldName="email"
-              label="Email"
+              label={t('email')}
               placeholder="customer@business.com"
               errors={errors}
               setErrors={setErrors}
@@ -349,7 +351,7 @@ const ForgotPassword = () => {
             <PrimaryTextFormField
               inputType="password"
               fieldName="newPassword"
-              label="Password"
+              label={('new password')}
               placeholder="•••••••••"
               errors={errors}
               setErrors={setErrors}

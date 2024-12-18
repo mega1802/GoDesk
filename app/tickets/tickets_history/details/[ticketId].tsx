@@ -7,10 +7,10 @@ import { GET_TICKET_DETAILS } from "@/constants/api_endpoints";
 import LoadingBar from "@/components/LoadingBar";
 import TicketStatusComponent from "@/components/tickets/TicketStatusComponent";
 import moment from "moment";
-
+import { useTranslation } from 'react-i18next';
 const TicketDetails = () => {
   const { ticketId } = useLocalSearchParams();
-
+const { t ,i18n} = useTranslation();
   const [ticketModel, setTicketModel] = useState<TicketListItemModel>({});
 
   const [isLoading, setIsLoading] = useState(true);
@@ -63,14 +63,14 @@ const TicketDetails = () => {
             <View className="w-full">
               <View className="flex-row justify-between items-center">
                 <View className="flex">
-                  <Text className="text-gray-500 text-md">Raised by</Text>
+                  <Text className="text-gray-500 text-md">{t('raisedBy')}</Text>
                   <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                     {ticketModel?.customerDetails?.firstName ?? "-"}{" "}
                     {ticketModel?.customerDetails?.lastName ?? ""}
                   </Text>
                 </View>
                 <View className="flex items-end">
-                  <Text className="text-gray-500 text-md">Raised At</Text>
+                  <Text className="text-gray-500 text-md">{t('raisedAt')}</Text>
                   <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                     {ticketModel.createdAt
                       ? moment(ticketModel.createdAt).fromNow()
@@ -82,13 +82,13 @@ const TicketDetails = () => {
             <View className="mt-3 w-full">
               <View className="flex-row justify-between items-center">
                 <View className="flex">
-                  <Text className="text-gray-500 text-md">Serial No</Text>
+                  <Text className="text-gray-500 text-md">{t('serialNo')}</Text>
                   <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                     {ticketModel?.assetInUseDetails?.serialNo ?? "-"}
                   </Text>
                 </View>
                 <View className="flex items-end">
-                  <Text className="text-gray-500 text-md">Asset Type</Text>
+                  <Text className="text-gray-500 text-md">{t('Asset Type')}</Text>
                   <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                     {ticketModel.assetInUseDetails?.assetMasterDetails
                       ?.assetTypeDetails?.name ?? "-"}
@@ -97,13 +97,13 @@ const TicketDetails = () => {
               </View>
             </View>
             <View className="mt-3 w-full">
-              <Text className="text-gray-500 text-md">Description</Text>
+              <Text className="text-gray-500 text-md">{t('description')}</Text>
               <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                 {ticketModel?.description ?? "-"}
               </Text>
             </View>
             <View className="mt-3 w-full">
-              <Text className="text-gray-500 text-md">Issue Images</Text>
+              <Text className="text-gray-500 text-md">{t('issueImages')}</Text>
               {(ticketModel.ticketImages ?? []).length > 0 ? (
                 ticketModel.ticketImages?.map((uri, index) => (
                   <Pressable
@@ -128,7 +128,7 @@ const TicketDetails = () => {
             </View>
             <View className="mt-3 w-full">
               <View>
-                <Text className="text-gray-500 text-md">Assinged To</Text>
+                <Text className="text-gray-500 text-md">{t('assignedTo')}</Text>
                 <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                   {ticketModel?.lastAssignedToDetails?.firstName ??
                     "-" + (ticketModel?.lastAssignedToDetails?.lastName ?? "")}
@@ -137,7 +137,7 @@ const TicketDetails = () => {
             </View>
             <View className="mt-3 w-full">
               <View>
-                <Text className="text-gray-500 text-md">Assinged At</Text>
+                <Text className="text-gray-500 text-md">{t('assignedAt')}</Text>
                 <Text className="mt-[2px] font-semibold text-gray-900 text-md">
                   {ticketModel.lastAssignedToDetails?.assignedAt
                     ? moment(

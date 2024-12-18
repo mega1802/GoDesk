@@ -4,7 +4,7 @@ import TicketStatusComponent from "./TicketStatusComponent";
 import { TicketListItemModel } from "@/models/tickets";
 import { router } from "expo-router";
 import moment from "moment";
-
+import { useTranslation } from 'react-i18next';
 interface TicketListItemLayoutProps {
   ticketModel: TicketListItemModel;
   cn?: string;
@@ -13,6 +13,7 @@ const TicketListItemLayout = ({
   ticketModel,
   cn = "",
 }: TicketListItemLayoutProps) => {
+  const { t, i18n } = useTranslation();
   return (
     <Pressable
       className={cn}
@@ -45,7 +46,7 @@ const TicketListItemLayout = ({
           <View className="w-full">
             <View className="flex-row items-center justify-between">
               <View className="flex">
-                <Text className="text-gray-500 text-md ">Raised by</Text>
+                <Text className="text-gray-500 text-md "> {t('raisedBy')}</Text>
                 <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
                   {ticketModel?.customerDetails?.firstName ?? "-"}{" "}
                   {ticketModel?.customerDetails?.lastName ?? ""}
@@ -63,7 +64,7 @@ const TicketListItemLayout = ({
               <AntDesign name="arrowright" size={18} color="#6b7280" />
             </View> */}
               <View className="flex items-end">
-                <Text className="text-gray-500 text-md ">Raised At</Text>
+                <Text className="text-gray-500 text-md ">{t('raisedAt')}</Text>
                 <Text className="text-md text-gray-900 font-semibold  mt-[2px]">
                   {ticketModel.createdAt
                     ? moment(ticketModel.createdAt).fromNow()

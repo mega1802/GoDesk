@@ -36,12 +36,12 @@ import Toast from "react-native-toast-message";
 import PrimaryDropdownFormField from "@/components/fields/PrimaryDropdownFormField";
 import PrimaryTextareaFormField from "@/components/fields/PrimaryTextareaFormField";
 import useRefresh from "@/hooks/useRefresh";
-
+import { useTranslation } from 'react-i18next'; 
 const RaiseTicketScreen = () => {
   const [assetsInUse, setAssetsInUse] = useState<AssetInUseListItemModel[]>([]);
   const [issueTypes, setIssueTypes] = useState<IssueTypeListItemModel[]>([]);
   const [errors, setErrors] = useState<ErrorModel[]>([]);
-
+  const { t, i18n } = useTranslation(); 
   const { customerId } = useLocalSearchParams();
 
   const [selectedAssetInUse, setSelectedAssetInUse] = useState<DropdownModel>(
@@ -288,7 +288,7 @@ const RaiseTicketScreen = () => {
           type="assetInUse"
           placeholder="Select asset"
           fieldName="assetInUseId"
-          label="Asset"
+          label={t('Asset')}
           canValidateField={canValidateField}
           setCanValidateField={setCanValidateField}
           setFieldValidationStatus={setFieldValidationStatus}
@@ -307,7 +307,7 @@ const RaiseTicketScreen = () => {
           type="issueType"
           placeholder="Select issue type"
           fieldName="issueTypeId"
-          label="Issue Type"
+          label={t('Issue Type')}
           canValidateField={canValidateField}
           setCanValidateField={setCanValidateField}
           setFieldValidationStatus={setFieldValidationStatus}
@@ -318,7 +318,7 @@ const RaiseTicketScreen = () => {
         />
         <PrimaryTextareaFormField
           fieldName="description"
-          label="Issue Description"
+          label={t('Issue Description')}
           placeholder="Write a short description about your issue"
           errors={errors}
           setErrors={setErrors}
@@ -343,7 +343,7 @@ const RaiseTicketScreen = () => {
         >
           <HStack className="justify-between mt-2 mb-1">
             <Text className="font-medium">
-              Asset Images <Text className="text-red-400">*</Text>
+              {t('assetImages')} <Text className="text-red-400">*</Text>
             </Text>
             <Text className="text-gray-500">{assetImages.length}/3</Text>
           </HStack>
@@ -413,7 +413,7 @@ const RaiseTicketScreen = () => {
                 color="black"
                 size={18}
               />
-              <ButtonText className="text-black">Add Image</ButtonText>
+              <ButtonText className="text-black">{t('addImage')}</ButtonText>
             </Button>
           )}
           <FormControlError className="mt-2">
@@ -423,15 +423,14 @@ const RaiseTicketScreen = () => {
           </FormControlError>
         </FormControl>
         <SubmitButton
-          btnText="Raise"
+          btnText={t('raise')}
           onPress={raiseTicket}
           isLoading={isLoading}
         />
         <View className="mt-4">
           <Text className="text-gray-600 text-semibold">Note:</Text>
           <Text className="mt-1 text-gray-600">
-            Once submitted, our team will review your issue and send an engineer
-            to resolve it.
+            {t('once_submitted')}
           </Text>
         </View>
       </VStack>

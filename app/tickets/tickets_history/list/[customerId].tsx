@@ -6,10 +6,10 @@ import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { View } from "react-native";
 import React from "react";
-
+import { useTranslation } from 'react-i18next'; 
 const TicketsHistoryScreen = () => {
   const { customerId } = useLocalSearchParams();
-
+  const { t, i18n } = useTranslation(); 
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const TicketsHistoryScreen = () => {
           })
         }
       >
-        <ButtonText>Raise a Ticket</ButtonText>
+        <ButtonText>{t('Raise Ticket')}</ButtonText>
         <Icon name="arrowright" color="white" size={22} className="ms-2" />
       </Button>
       <View className="mt-2 ">

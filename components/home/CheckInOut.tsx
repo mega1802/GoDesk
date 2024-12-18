@@ -23,7 +23,7 @@ import Toast from "react-native-toast-message";
 import { CreateCheckInOutModel } from "@/models/users";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import api from "@/services/api";
-
+import { useTranslation } from 'react-i18next';
 interface CheckInOutProps {
   setIsModalVisible: any;
   bottomSheetRef: any;
@@ -44,7 +44,7 @@ const CheckInOutModal = ({
   );
   const [pincode, setPincode] = useState<string | undefined>(undefined);
   const [errors, setErrors] = useState<ErrorModel[]>([]);
-
+  const { t ,i18n} = useTranslation();
   const [selfie, setSelfie] = useState("");
 
   const [errorMsg, setErrorMsg] = useState("");
@@ -234,15 +234,15 @@ const CheckInOutModal = ({
       <View className="gap-4 p-4">
         {/* <Text>{JSON.stringify(checkedInId)}</Text> */}
         <Text className="font-bold text-xl">
-          {status === "Checked In" ? "Check Out" : "Check In"}
+          {status === "Checked In" ? t('checkOut') : t("checkIn")}
         </Text>
         <View className="gap-5">
           <View className="">
-            <Text className="font-semibold text-lg">Start at</Text>
+            <Text className="font-semibold text-lg">{t('startAt')}</Text>
             <Text className="mt-1 text-gray-700 text-md">{currentTime}</Text>
           </View>
           <View className="">
-            <Text className="font-semibold text-lg">Pincode</Text>
+            <Text className="font-semibold text-lg">{t('pincode')}</Text>
             <Text className="mt-1 text-gray-700 text-md">{pincode ?? "-"}</Text>
           </View>
           <View className="flex-row justify-between">
@@ -251,7 +251,7 @@ const CheckInOutModal = ({
               isInvalid={isFormFieldInValid("selfie", errors).length > 0}
             >
               <View className="">
-                <Text className="font-semibold text-lg">Selfie</Text>
+                <Text className="font-semibold text-lg">{t('selfie')}</Text>
                 {selfie.length === 0 ? (
                   <Pressable
                     onPress={() => {
