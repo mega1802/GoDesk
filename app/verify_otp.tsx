@@ -14,7 +14,7 @@ import { setItem } from '@/utils/secure_store';
 import { AUTH_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/constants/storage_keys';
 import PrimaryTextFormField from "@/components/PrimaryTextFormField";
 import { useTranslation } from 'react-i18next';  // Import the translation hook
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 const VerifyOTPScreen = () => {
   const { mobile } = useLocalSearchParams();
   const { t, i18n } = useTranslation();  
@@ -35,17 +35,7 @@ const VerifyOTPScreen = () => {
       fieldValidationStatus[fieldName](isValid);
     }
   };
-  useEffect(() => {
-    const fetchLanguage = async () => {
-      const storedLanguage = await AsyncStorage.getItem('language');
-      if (storedLanguage) {
-        setSelectedLanguage(storedLanguage);
-        i18n.changeLanguage(storedLanguage); // Set language from AsyncStorage
-      }
-    };
-
-    fetchLanguage();
-  }, []);
+ 
 
 
   const handleVerifyOTP = async () => {

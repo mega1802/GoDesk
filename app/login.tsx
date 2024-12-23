@@ -28,9 +28,9 @@ import { setItem } from "@/utils/secure_store";
 import { AUTH_TOKEN_KEY } from "@/constants/storage_keys";
 import PrimaryTextFormField from "@/components/PrimaryTextFormField";
 import { useTranslation } from 'react-i18next';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const LoginScreen = () => {
-  const { t ,i18n} = useTranslation(); // Access translations using `t`
+  const { t ,i18n} = useTranslation(); 
   const animationRef = useRef<LottieView>(null);
   const [mobile, setMobileNumber] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,17 +38,7 @@ const LoginScreen = () => {
   const [canValidateField, setCanValidateField] = useState(false);
   const [fieldValidationStatus, setFieldValidationStatus] = useState<any>({});
   const [selectedLanguage, setSelectedLanguage] = useState('en'); 
-  useEffect(() => {
-    const fetchLanguage = async () => {
-      const storedLanguage = await AsyncStorage.getItem('language');
-      if (storedLanguage) {
-        setSelectedLanguage(storedLanguage);
-        i18n.changeLanguage(storedLanguage); // Set language from AsyncStorage
-      }
-    };
-
-    fetchLanguage();
-  }, []);
+ 
 
   const setFieldValidationStatusFunc = (
     fieldName: string,
@@ -60,7 +50,7 @@ const LoginScreen = () => {
   };
 
   const handleSendOTP = async () => {
-    if (!mobile || !/^\d{10}$/.test(mobile)) {
+    if (!mobile || /^[6-9][0-9]{9}$/.test(mobile)) {
       setErrors([
         {
           param: "mobile",
@@ -79,8 +69,6 @@ const LoginScreen = () => {
         console.log("Response:", response.data.data);
 
         if (response.data?.success) {
-          // setMobileNumber('');
-          //reset mobile no
           router.push({
             pathname: "/verify_otp",
             params: { mobile }, 
@@ -101,7 +89,7 @@ const LoginScreen = () => {
       .catch((error) => {
         console.error("Error sending OTP:", error.response?.data || error);
 
-        // Handle network or unexpected errors
+        
         setErrors([
           {
             param: "mobile",
